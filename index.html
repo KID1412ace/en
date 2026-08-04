@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>英文單字萃取工具</title>
+    <title>英文單字萃取與字庫系統</title>
     <style>
         :root {
             --primary-color: #0366d6;
@@ -16,120 +16,169 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            max-width: 600px; 
+            max-width: 800px; 
             margin: 3rem auto; 
             padding: 2rem;
             background: white;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        h2 { margin-top: 0; color: var(--primary-color); }
+        h2 { margin-top: 0; color: var(--primary-color); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
         textarea { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 16px; 
-            box-sizing: border-box; 
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 16px;
-            resize: vertical;
-        }
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+            width: 100%; padding: 12px; margin-bottom: 16px; box-sizing: border-box; 
+            border: 1px solid var(--border-color); border-radius: 6px; font-size: 16px; resize: vertical;
         }
         button { 
-            width: 100%;
-            padding: 12px; 
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer; 
-            background: var(--primary-color); 
-            color: white; 
-            border: none; 
-            border-radius: 6px; 
-            transition: background 0.2s;
+            width: 100%; padding: 12px; font-size: 16px; font-weight: bold;
+            cursor: pointer; background: var(--primary-color); color: white; border: none; border-radius: 6px; 
+            transition: background 0.2s; margin-bottom: 10px;
         }
         button:hover { background: var(--hover-color); }
         button:disabled { background: #cccccc; cursor: not-allowed; }
-        #status { 
-            margin-top: 16px; 
-            font-weight: 500; 
-            text-align: center;
-            min-height: 24px;
-        }
+        .btn-secondary { background: #28a745; }
+        .btn-secondary:hover { background: #218838; }
+        
+        #status { margin-top: 10px; font-weight: 500; text-align: center; min-height: 24px; margin-bottom: 20px;}
         .success { color: #28a745; }
         .error { color: #cb2431; }
         .loading { color: #586069; }
+
+        /* 表格樣式 */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--bg-color); color: var(--text-color); font-weight: bold; }
+        tr:hover { background-color: #f1f8ff; }
+        .empty-msg { text-align: center; color: #6a737d; padding: 20px; }
     </style>
 </head>
 <body>
 
-    <h2>📝 英文文章單字萃取器</h2>
-    <p>貼上一段英文文章，系統會自動去除標點符號、過濾重複單字，並將結果儲存到雲端試算表中。</p>
-    
-    <textarea id="article" rows="8" placeholder="請將英文文章貼在這裡... (例如: Apple is looking at buying U.K. startup for $1 billion)"></textarea>
-    
-    <button id="submitBtn" onclick="processText()">萃取並儲存</button>
+    <h2>📝 英文文章單字萃取</h2>
+    <textarea id="article" rows="6" placeholder="請將英文文章貼在這裡..."></textarea>
+    <button id="submitBtn" onclick="processText()">萃取並儲存到單字庫</button>
     <div id="status"></div>
 
+    <h2>📚 我的個人單字庫</h2>
+    <button id="loadBtn" class="btn-secondary" onclick="loadVocabulary()">🔄 重新載入單字庫</button>
+    
+    <table id="vocabTable">
+        <thead>
+            <tr>
+                <th width="30%">英文單字</th>
+                <th width="40%">中文翻譯</th>
+                <th width="30%">加入時間</th>
+            </tr>
+        </thead>
+        <tbody id="vocabBody">
+            <tr><td colspan="3" class="empty-msg">點擊上方按鈕載入單字...</td></tr>
+        </tbody>
+    </table>
+
     <script>
-        // ⚠️ 請務必將下方的 URL 替換為你的 Google Apps Script「網頁應用程式」網址
+        // ⚠️ 替換成你的 Google Apps Script 網址
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec';
 
+        // 頁面載入完成時，自動抓取一次單字庫
+        window.onload = function() {
+            loadVocabulary();
+        };
+
+        // --- 功能一：寫入單字 (POST) ---
         async function processText() {
             const text = document.getElementById('article').value;
-            const statusEl = document.getElementById('status');
             const btn = document.getElementById('submitBtn');
             
-            // 檢查是否為空
             if (!text.trim()) {
                 showMessage("請先輸入文章內容！", "error");
                 return;
             }
 
-            // 鎖定按鈕與顯示載入中
             btn.disabled = true;
-            btn.innerText = "處理中...";
-            showMessage("正在萃取單字並傳送資料...", "loading");
+            btn.innerText = "處理中 (包含自動翻譯)...";
+            showMessage("正在處理並儲存資料...", "loading");
 
-            // 1. 萃取單字：轉小寫，並利用 Regex (\b[a-z]+\b) 只抓取英文字母組成的單字
             const wordsArray = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
-            
-            // 2. 過濾重複單字 (利用 Set 物件的特性)
             const uniqueWords = [...new Set(wordsArray)];
 
             if (uniqueWords.length === 0) {
                 showMessage("沒有找到任何有效的英文單字。", "error");
-                resetButton();
+                resetButton(btn, "萃取並儲存到單字庫");
                 return;
             }
 
             try {
-                // 3. 發送 POST 請求至 Apps Script
-                // 使用 text/plain 避免 CORS (跨來源資源共用) 的 Preflight 請求問題
                 const response = await fetch(GAS_URL, {
                     method: 'POST',
                     body: JSON.stringify({ words: uniqueWords }),
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    }
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
                 
                 const result = await response.json();
-                
                 if (result.status === 'success') {
-                    showMessage(`✅ 成功！已將 ${result.count} 個不重複單字寫入試算表。`, "success");
-                    document.getElementById('article').value = ''; // 清空輸入框
+                    showMessage(`✅ 成功！已寫入 ${result.count} 個單字。`, "success");
+                    document.getElementById('article').value = '';
+                    // 寫入成功後，自動更新下方的單字庫表格
+                    loadVocabulary();
                 } else {
                     throw new Error(result.message);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                showMessage("❌ 發生錯誤，請檢查系統連線或確認後端網址是否正確填寫。", "error");
+                showMessage("❌ 發生錯誤，無法儲存。", "error");
             } finally {
-                resetButton();
+                resetButton(btn, "萃取並儲存到單字庫");
+            }
+        }
+
+        // --- 功能二：讀取單字庫 (GET) ---
+        async function loadVocabulary() {
+            const tbody = document.getElementById('vocabBody');
+            const btn = document.getElementById('loadBtn');
+            
+            btn.disabled = true;
+            btn.innerText = "🔄 載入中...";
+            tbody.innerHTML = '<tr><td colspan="3" class="empty-msg">正在從試算表讀取資料...</td></tr>';
+
+            try {
+                // 使用 GET 方法呼叫 API (fetch 預設就是 GET)
+                const response = await fetch(GAS_URL);
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    const data = result.data;
+                    
+                    if (data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="3" class="empty-msg">單字庫目前是空的喔！</td></tr>';
+                        return;
+                    }
+
+                    // 反轉陣列，讓最新加入的單字顯示在最上面
+                    data.reverse();
+
+                    // 動態產生表格內容
+                    tbody.innerHTML = data.map(item => {
+                        // 格式化時間字串
+                        const dateObj = new Date(item.timestamp);
+                        const dateString = isNaN(dateObj) ? '時間格式錯誤' : dateObj.toLocaleString('zh-TW', {
+                            month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'
+                        });
+
+                        return `
+                            <tr>
+                                <td><strong>${item.word}</strong></td>
+                                <td>${item.translation}</td>
+                                <td style="color: #6a737d; font-size: 0.9em;">${dateString}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                    
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                tbody.innerHTML = '<tr><td colspan="3" class="empty-msg" style="color: red;">❌ 讀取失敗，請檢查網路或 API 設定。</td></tr>';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "🔄 重新載入單字庫";
             }
         }
 
@@ -139,10 +188,9 @@
             statusEl.className = type;
         }
 
-        function resetButton() {
-            const btn = document.getElementById('submitBtn');
+        function resetButton(btn, text) {
             btn.disabled = false;
-            btn.innerText = "萃取並儲存";
+            btn.innerText = text;
         }
     </script>
 </body>
