@@ -3,117 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 英文單字庫</title>
+    <title>溫暖手帳單字庫</title>
     <style>
+        /* 溫暖柔和調色盤 */
         :root {
-            --primary: #4F46E5;
-            --primary-hover: #4338CA;
-            --bg-color: #F3F4F6;
+            --primary: #E07A5F;       /* 溫暖的赤陶/暖橘色 */
+            --primary-hover: #D0694F; 
+            --secondary: #81B29A;     /* 柔和的莫蘭迪綠 */
+            --secondary-hover: #6EA087;
+            --bg-color: #FDFBF7;      /* 帶點暖意的米白背景 */
             --card-bg: #FFFFFF;
-            --text-main: #1F2937;
-            --text-muted: #6B7280;
+            --text-main: #5C4D43;     /* 溫和的深咖啡色取代死黑 */
+            --text-muted: #9E8C7E;
+            --border-color: #F0E6D8;  /* 柔和的邊框色 */
         }
+        
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Nunito', 'Varela Round', 'Segoe UI', Tahoma, sans-serif; /* 使用較圓潤的字體 */
             background-color: var(--bg-color);
             color: var(--text-main);
             max-width: 900px; 
             margin: 2rem auto; 
             padding: 0 1.5rem;
         }
+
         .header-section {
             background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+            padding: 2.5rem;
+            border-radius: 20px; /* 更大的圓角 */
+            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.05); /* 帶有暖色調的柔和陰影 */
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
         }
-        h2 { margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 8px;}
+
+        h2 { margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; font-weight: 700;}
+        
         textarea { 
             width: 100%; padding: 16px; margin-bottom: 16px; box-sizing: border-box; 
-            border: 2px solid #E5E7EB; border-radius: 8px; font-size: 16px; resize: vertical;
-            transition: border-color 0.3s;
+            border: 2px solid var(--border-color); border-radius: 12px; font-size: 16px; 
+            resize: vertical; color: var(--text-main); background-color: #FCFAFB;
+            transition: all 0.3s ease;
         }
-        textarea:focus { outline: none; border-color: var(--primary); }
+        textarea:focus { outline: none; border-color: var(--primary); background-color: #FFF; box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.1); }
         
         button { 
-            width: 100%; padding: 14px; font-size: 16px; font-weight: 600;
+            width: 100%; padding: 14px; font-size: 16px; font-weight: 600; letter-spacing: 1px;
             cursor: pointer; background: var(--primary); color: white; border: none; 
-            border-radius: 8px; transition: all 0.2s; margin-bottom: 10px;
+            border-radius: 12px; transition: all 0.3s ease; margin-bottom: 10px;
         }
-        button:hover { background: var(--primary-hover); transform: translateY(-1px); }
-        button:disabled { background: #9CA3AF; cursor: not-allowed; transform: none; }
+        button:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(224, 122, 95, 0.2); }
+        button:disabled { background: #DBCDBF; cursor: not-allowed; transform: none; box-shadow: none; }
         
-        .btn-secondary { background: #10B981; width: auto; padding: 10px 20px;}
-        .btn-secondary:hover { background: #059669; }
+        .btn-secondary { background: var(--secondary); width: auto; padding: 10px 24px; border-radius: 10px;}
+        .btn-secondary:hover { background: var(--secondary-hover); box-shadow: 0 4px 12px rgba(129, 178, 154, 0.2);}
         
         #status { font-weight: 600; text-align: center; min-height: 24px; margin-top: 10px;}
-        .success { color: #10B981; } .error { color: #EF4444; } .loading { color: #6B7280; }
+        .success { color: var(--secondary); } .error { color: #E56B6F; } .loading { color: var(--text-muted); }
 
-        /* 單字卡片網格佈局 */
+        /* 單字卡片網格 */
         .vocab-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
         .vocab-card {
             background: var(--card-bg);
             padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #E5E7EB;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.04);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
         .vocab-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 24px rgba(139, 115, 85, 0.08);
+            border-color: #E2D4C3;
         }
-        .word-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-        .word-title { font-size: 1.5rem; font-weight: bold; margin: 0; color: #111827; }
+        .word-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .word-title { font-size: 1.6rem; font-weight: bold; margin: 0; color: #4A3F35; letter-spacing: 0.5px;}
         
-        /* 詞性標籤設計 */
+        /* 溫暖系詞性標籤 */
         .pos-badge {
-            font-size: 0.75rem; font-weight: 600; padding: 4px 8px;
-            border-radius: 9999px; text-transform: uppercase;
+            font-size: 0.8rem; font-weight: 600; padding: 4px 10px;
+            border-radius: 20px; text-transform: lowercase; letter-spacing: 0.5px;
         }
-        .pos-noun { background: #DBEAFE; color: #1D4ED8; }
-        .pos-verb { background: #FCE7F3; color: #BE185D; }
-        .pos-adjective { background: #FEF3C7; color: #B45309; }
-        .pos-adverb { background: #E0E7FF; color: #4338CA; }
-        .pos-unknown { background: #F3F4F6; color: #6B7280; }
+        .pos-noun { background: #FDE2E4; color: #C85A65; }       /* 柔粉色 */
+        .pos-verb { background: #FFE5D9; color: #C96A4B; }       /* 暖橘色 */
+        .pos-adjective { background: #E9EDC9; color: #6B7B4C; }  /* 奶茶綠 */
+        .pos-adverb { background: #E2ECE9; color: #5B7B7A; }     /* 莫蘭迪灰藍 */
+        .pos-unknown { background: #F4F1ED; color: #9E8C7E; }    /* 燕麥色 */
 
-        .phonetic { color: var(--text-muted); font-family: 'Courier New', Courier, monospace; margin-bottom: 12px; }
-        .translation { font-size: 1.1rem; font-weight: 500; color: #374151; border-top: 1px dashed #E5E7EB; padding-top: 12px; }
+        .phonetic { color: var(--text-muted); font-family: 'Courier New', Courier, monospace; margin-bottom: 16px; font-size: 0.95rem;}
+        .translation { font-size: 1.15rem; font-weight: 500; color: var(--text-main); border-top: 2px dashed var(--border-color); padding-top: 16px; margin-top: auto;}
         .empty-msg { text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-top: 2rem; grid-column: 1 / -1;}
     </style>
 </head>
 <body>
 
     <div class="header-section">
-        <h2>✨ 英文單字萃取器</h2>
-        <textarea id="article" rows="5" placeholder="貼上英文文章，系統將自動為您生成專屬單字卡..."></textarea>
-        <button id="submitBtn" onclick="processText()">萃取並建立單字卡</button>
+        <h2>☕ 溫暖手帳單字萃取</h2>
+        <textarea id="article" rows="5" placeholder="貼上英文文章，系統會自動抓取 KK 音標與精準詞性..."></textarea>
+        <button id="submitBtn" onclick="processText()">萃取並放入單字盒</button>
         <div id="status"></div>
     </div>
 
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>📚 專屬單字庫</h2>
-        <button id="loadBtn" class="btn-secondary" onclick="loadVocabulary()">🔄 重新載入</button>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 0.5rem;">
+        <h2>📚 我的單字盒</h2>
+        <button id="loadBtn" class="btn-secondary" onclick="loadVocabulary()">🔄 重新整理</button>
     </div>
     
-    <!-- 卡片顯示區塊 -->
     <div id="vocabContainer" class="vocab-grid">
         <div class="empty-msg">點擊上方按鈕載入單字...</div>
     </div>
 
     <script>
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec';
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請記得替換網址
 
         window.onload = loadVocabulary;
 
@@ -122,20 +129,20 @@
             const btn = document.getElementById('submitBtn');
             
             if (!text.trim()) {
-                showMessage("請先輸入文章內容！", "error");
+                showMessage("請先輸入文章內容喔！", "error");
                 return;
             }
 
             btn.disabled = true;
-            btn.innerText = "正在分析單字、音標與詞性...";
-            showMessage("這可能需要幾秒鐘，請稍候...", "loading");
+            btn.innerText = "努力翻找字典中...";
+            showMessage("正在為您抓取 KK 音標與詞性，請稍候...", "loading");
 
             const wordsArray = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
             const uniqueWords = [...new Set(wordsArray)];
 
             if (uniqueWords.length === 0) {
                 showMessage("沒有找到有效的英文單字。", "error");
-                resetButton(btn, "萃取並建立單字卡");
+                resetButton(btn, "萃取並放入單字盒");
                 return;
             }
 
@@ -148,14 +155,14 @@
                 
                 const result = await response.json();
                 if (result.status === 'success') {
-                    showMessage(`✅ 成功建立 ${result.count} 張單字卡！`, "success");
+                    showMessage(`✨ 成功建立 ${result.count} 張專屬單字卡！`, "success");
                     document.getElementById('article').value = '';
                     loadVocabulary();
                 } else throw new Error(result.message);
             } catch (error) {
                 showMessage("❌ 儲存失敗，請檢查網路連線。", "error");
             } finally {
-                resetButton(btn, "萃取並建立單字卡");
+                resetButton(btn, "萃取並放入單字盒");
             }
         }
 
@@ -164,7 +171,7 @@
             const btn = document.getElementById('loadBtn');
             
             btn.disabled = true;
-            container.innerHTML = '<div class="empty-msg">讀取中...</div>';
+            container.innerHTML = '<div class="empty-msg">輕輕翻開單字盒中...</div>';
 
             try {
                 const response = await fetch(GAS_URL);
@@ -174,23 +181,23 @@
                     const data = result.data;
                     
                     if (data.length === 0) {
-                        container.innerHTML = '<div class="empty-msg">單字庫目前是空的，快去萃取一些單字吧！</div>';
+                        container.innerHTML = '<div class="empty-msg">單字盒目前空空的，快去萃取一些單字吧！</div>';
                         return;
                     }
 
                     data.reverse();
 
-                    // 動態生成 HTML 卡片
                     container.innerHTML = data.map(item => {
-                        // 決定詞性標籤顏色
                         let posClass = 'pos-unknown';
                         const pos = (item.pos || "未知").toLowerCase();
-                        if (pos.includes('noun')) posClass = 'pos-noun';
-                        else if (pos.includes('verb')) posClass = 'pos-verb';
-                        else if (pos.includes('adj')) posClass = 'pos-adjective';
-                        else if (pos.includes('adv')) posClass = 'pos-adverb';
+                        
+                        // 針對 Yahoo 字典的詞寫格式進行判斷 (例如 n., v., adj.)
+                        if (pos.includes('n.') || pos.includes('noun')) posClass = 'pos-noun';
+                        else if (pos.includes('v.') || pos.includes('verb') || pos.includes('vi.') || pos.includes('vt.')) posClass = 'pos-verb';
+                        else if (pos.includes('adj') || pos.includes('a.')) posClass = 'pos-adjective';
+                        else if (pos.includes('adv') || pos.includes('ad.')) posClass = 'pos-adverb';
 
-                        const phoneticText = item.phonetic ? item.phonetic : '無音標';
+                        const phoneticText = item.phonetic && item.phonetic !== "無音標" ? item.phonetic : '無音標';
 
                         return `
                             <div class="vocab-card">
@@ -206,7 +213,7 @@
                     
                 } else throw new Error(result.message);
             } catch (error) {
-                container.innerHTML = '<div class="empty-msg" style="color: #EF4444;">❌ 讀取失敗。</div>';
+                container.innerHTML = '<div class="empty-msg" style="color: #E56B6F;">❌ 讀取失敗。</div>';
             } finally {
                 btn.disabled = false;
             }
