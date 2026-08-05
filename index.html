@@ -3,175 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warm Vocab | 溫暖手帳</title>
+    <title>⚡ Super Vocab | 誇張手帳</title>
     <style>
         :root {
-            --primary: #E07A5F; --primary-hover: #D0694F;
-            --secondary: #81B29A; --secondary-hover: #6EA087;
-            --text-main: #5C4D43; --text-muted: #8E7C6E;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.4);
+            --bg-color: #FFE5D9;
+            --primary: #FF7D00;
+            --secondary: #FFB703;
+            --dark: #023047;
+            --card-bg: #FFF;
+            --border-thick: 4px solid var(--dark);
         }
 
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Nunito', sans-serif; color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth;}
-
-        /* --- 溫暖流動背景與漂浮裝飾 --- */
-        .bg-animation {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
-            background: linear-gradient(120deg, #FDFBF7, #FFE5D9, #F6D365, #FFDEE9);
-            background-size: 300% 300%; animation: gradientBG 15s ease infinite;
-        }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .shape { position: absolute; filter: blur(60px); opacity: 0.6; border-radius: 50%; animation: float 10s infinite ease-in-out alternate;}
-        .shape-1 { width: 300px; height: 300px; background: #FF9A9E; top: -50px; left: -50px; }
-        .shape-2 { width: 400px; height: 400px; background: #F6D365; bottom: -100px; right: -50px; animation-delay: -5s;}
-        @keyframes float { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(30px) scale(1.1); } }
-
-        /* --- 毛玻璃共用樣式 (Glassmorphism) --- */
-        .glass-panel {
-            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border); border-radius: 24px; box-shadow: 0 8px 32px rgba(224, 122, 95, 0.08);
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            font-family: 'Nunito', 'Segoe UI', sans-serif; 
+            background-color: var(--bg-color); color: var(--dark); 
+            overflow-x: hidden; scroll-behavior: smooth;
+            /* 誇張的背景網點 */
+            background-image: radial-gradient(var(--dark) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* --- 主頁面設計 --- */
-        #homePage { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem; box-sizing: border-box; transition: opacity 0.5s;}
-        .hero-title { font-size: 4rem; font-weight: 800; color: var(--primary); text-shadow: 2px 2px 0px #FFF; margin-bottom: 10px; text-align: center;}
-        .hero-subtitle { font-size: 1.2rem; color: var(--text-main); margin-bottom: 3rem; font-weight: 600; text-align: center;}
-        
-        .feature-cards { display: flex; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; justify-content: center;}
-        .feat-card { width: 220px; padding: 1.5rem; text-align: center; transition: transform 0.3s;}
-        .feat-card:hover { transform: translateY(-10px); }
-        .feat-icon { font-size: 2.5rem; margin-bottom: 10px; }
-        .feat-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 8px;}
-        .feat-desc { font-size: 0.9rem; color: var(--text-muted); }
+        /* --- 兩側誇張漂浮小物 --- */
+        .decor { position: fixed; z-index: 0; pointer-events: none; animation: bounce 4s infinite alternate ease-in-out; filter: drop-shadow(4px 4px 0px var(--dark)); }
+        .decor-1 { top: 15%; left: 3%; font-size: 5rem; transform: rotate(-15deg); }
+        .decor-2 { bottom: 20%; left: 5%; font-size: 6rem; animation-delay: -1s; }
+        .decor-3 { top: 10%; right: 4%; font-size: 5.5rem; transform: rotate(20deg); animation-delay: -2s; }
+        .decor-4 { bottom: 15%; right: 3%; font-size: 7rem; transform: rotate(-10deg); animation-delay: -3s; }
+        @keyframes bounce { 0% { transform: translateY(0px) rotate(0deg); } 100% { transform: translateY(-30px) rotate(10deg); } }
 
-        .btn-main {
-            padding: 16px 48px; font-size: 1.2rem; font-weight: 700; background: var(--primary); color: white;
-            border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 10px 20px rgba(224, 122, 95, 0.3);
-            transition: all 0.3s;
+        /* --- Neo-Brutalism 共用風格 --- */
+        .brutal-box {
+            background: var(--card-bg); border: var(--border-thick);
+            border-radius: 16px; box-shadow: 8px 8px 0px var(--dark);
+            transition: all 0.2s ease; position: relative; z-index: 1;
         }
-        .btn-main:hover { transform: scale(1.05); background: var(--primary-hover); box-shadow: 0 15px 25px rgba(224, 122, 95, 0.4); }
-
-        /* --- 應用程式頁面設計 --- */
-        #appPage { display: none; min-height: 100vh; padding: 2rem 1.5rem; box-sizing: border-box;}
-        .app-container { max-width: 900px; margin: 0 auto; }
+        .brutal-btn {
+            background: var(--primary); color: white; border: var(--border-thick);
+            padding: 12px 24px; font-size: 1.2rem; font-weight: 900;
+            border-radius: 12px; box-shadow: 6px 6px 0px var(--dark);
+            cursor: pointer; transition: all 0.1s; text-transform: uppercase;
+        }
+        .brutal-btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--dark); }
+        .brutal-btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px var(--dark); }
         
-        /* 導覽列 */
-        .nav-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center;}
-        .btn-back { background: white; border: 1px solid var(--primary); color: var(--primary); padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s;}
-        .btn-back:hover { background: var(--primary); color: white; }
-
-        /* 萃取區塊 */
-        .extract-section { padding: 2rem; margin-bottom: 2rem; }
-        textarea { width: 100%; padding: 16px; margin-bottom: 16px; border: 2px solid white; border-radius: 16px; font-size: 16px; resize: vertical; background: rgba(255,255,255,0.7); outline: none; transition: 0.3s;}
-        textarea:focus { border-color: var(--primary); background: #FFF; }
-        button:disabled { filter: grayscale(100%); cursor: not-allowed; }
-
-        /* 工具列 (整理與新增) */
-        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 0 0.5rem;}
-        .btn-action { background: var(--secondary); color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s;}
-        .btn-action:hover { background: var(--secondary-hover); transform: translateY(-2px);}
-
-        /* 單字卡片區 */
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
-        .vocab-card { padding: 1.5rem; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; }
-        .vocab-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(139, 115, 85, 0.15); border-color: white;}
+        /* --- 頁面佈局 --- */
+        #homePage, #appPage { min-height: 100vh; padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10;}
+        #appPage { display: none; justify-content: flex-start; padding-top: 3rem;}
         
-        /* 刪除按鈕 */
-        .btn-delete { position: absolute; top: 12px; right: 12px; background: #FFD4D4; color: #E56B6F; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-weight: bold; opacity: 0.5; transition: 0.3s;}
-        .vocab-card:hover .btn-delete { opacity: 1; }
-        .btn-delete:hover { background: #E56B6F; color: white; transform: scale(1.1);}
+        .hero-title { font-size: 5rem; font-weight: 900; color: var(--primary); text-shadow: 6px 6px 0px var(--dark); margin: 0; letter-spacing: 2px; text-align: center;}
+        .hero-subtitle { font-size: 1.5rem; font-weight: bold; background: white; border: 3px solid var(--dark); padding: 5px 15px; transform: rotate(-2deg); margin: 20px 0 40px 0; box-shadow: 4px 4px 0px var(--dark);}
 
-        .word-title { font-size: 1.6rem; font-weight: bold; margin: 0 0 10px 0; color: var(--text-main); }
-        .pos-badge { font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.05);}
-        .phonetic { color: var(--text-muted); font-family: monospace; margin: 10px 0 16px 0; }
-        .translation { font-size: 1.15rem; font-weight: 500; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 16px; margin-top: auto;}
+        .app-container { width: 100%; max-width: 800px; }
+        .nav-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; }
+        
+        textarea { 
+            width: 100%; padding: 16px; margin-bottom: 16px; border: var(--border-thick); 
+            border-radius: 12px; font-size: 1.2rem; font-weight: bold; resize: vertical; 
+            box-shadow: inset 4px 4px 0px rgba(0,0,0,0.05); box-sizing: border-box;
+        }
+        textarea:focus { outline: none; background: #FFF3E0; }
 
-        /* --- 彈出式新增表單 Modal --- */
-        #addModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.3); z-index: 100; justify-content: center; align-items: center;}
-        .modal-content { background: white; padding: 2rem; border-radius: 24px; width: 90%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);}
-        .modal-content h3 { margin-top: 0; color: var(--primary); }
-        .modal-content input { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;}
-        .modal-btns { display: flex; gap: 10px; margin-top: 10px;}
-        .modal-btns button { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer;}
-        .btn-cancel { background: #eee; color: #555; }
-        .btn-confirm { background: var(--primary); color: white; }
+        /* --- 單字卡設計 --- */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; padding-bottom: 4rem;}
+        .vocab-card { padding: 1.5rem; display: flex; flex-direction: column; background: #FFF; overflow: hidden; }
+        .vocab-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px var(--dark); }
+        
+        /* 裝飾性膠帶 */
+        .tape { position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 100px; height: 30px; background: rgba(255, 183, 3, 0.8); border: 2px solid var(--dark); z-index: 2;}
+        
+        .word-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; margin-top: 10px;}
+        .word-title { font-size: 2rem; font-weight: 900; margin: 0; text-transform: capitalize;}
+        
+        /* 詞性標籤 */
+        .pos-badge { font-size: 0.9rem; font-weight: 900; padding: 4px 12px; border: 2px solid var(--dark); border-radius: 20px; background: var(--secondary); box-shadow: 2px 2px 0px var(--dark);}
+        .phonetic { font-size: 1.1rem; font-family: 'Courier New', Courier, monospace; font-weight: bold; margin-bottom: 15px; color: #555;}
+        .translation { font-size: 1.3rem; font-weight: bold; border-top: 3px dashed var(--dark); padding-top: 15px; margin-top: auto;}
+
+        /* 發音與刪除按鈕 */
+        .card-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-speak { flex: 1; background: #8ECAE6; color: var(--dark); border: 2px solid var(--dark); border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; padding: 8px; box-shadow: 3px 3px 0px var(--dark); transition: 0.1s;}
+        .btn-speak:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
+        .btn-del { background: #FF595E; color: white; border: 2px solid var(--dark); border-radius: 8px; font-weight: bold; cursor: pointer; padding: 8px 12px; box-shadow: 3px 3px 0px var(--dark);}
+        
+        #status { font-size: 1.2rem; font-weight: 900; background: white; padding: 5px 15px; border: 3px solid var(--dark); display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 100; box-shadow: 4px 4px 0px var(--dark);}
+
+        /* Modal */
+        #addModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(2, 48, 71, 0.8); z-index: 1000; justify-content: center; align-items: center;}
+        .modal-content { background: var(--secondary); padding: 2rem; width: 90%; max-width: 400px; }
+        .modal-content input { border-width: 3px; font-weight: bold; margin-bottom: 15px;}
     </style>
 </head>
 <body>
 
-    <!-- 暖色動態背景 -->
-    <div class="bg-animation">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-    </div>
+    <!-- 兩側誇張小物裝飾 -->
+    <div class="decor decor-1">🚀</div>
+    <div class="decor decor-2">☕</div>
+    <div class="decor decor-3">🎸</div>
+    <div class="decor decor-4">🕹️</div>
 
-    <!-- 首頁 -->
+    <div id="status">狀態訊息</div>
+
+    <!-- 主頁 -->
     <div id="homePage">
-        <div class="hero-title">Warm Vocab</div>
-        <div class="hero-subtitle">打造專屬於你的、富有溫度的英文單字手帳</div>
-        
-        <div class="feature-cards">
-            <div class="feat-card glass-panel">
-                <div class="feat-icon">✨</div>
-                <div class="feat-title">AI 自動萃取</div>
-                <div class="feat-desc">貼上文章，一鍵過濾重複單字並查詢發音。</div>
-            </div>
-            <div class="feat-card glass-panel">
-                <div class="feat-icon">✏️</div>
-                <div class="feat-title">高度自定義</div>
-                <div class="feat-desc">支援手動新增與修改，輕鬆應對各種學習需求。</div>
-            </div>
-            <div class="feat-card glass-panel">
-                <div class="feat-title">☁️</div>
-                <div class="feat-title">雲端同步</div>
-                <div class="feat-desc">資料安全儲存於 Google Sheets，永久免費。</div>
-            </div>
-        </div>
-
-        <button class="btn-main" onclick="switchPage('appPage')">開啟手帳 ➔</button>
+        <h1 class="hero-title">WILD<br>VOCAB</h1>
+        <div class="hero-subtitle">最狂的英文單字手帳 💥</div>
+        <button class="brutal-btn" style="font-size: 1.5rem; padding: 15px 40px;" onclick="switchPage('appPage')">LET'S GO ➔</button>
     </div>
 
-    <!-- 應用程式頁面 -->
+    <!-- 系統頁面 -->
     <div id="appPage">
         <div class="app-container">
             <div class="nav-bar">
-                <button class="btn-back" onclick="switchPage('homePage')">🏠 返回首頁</button>
-                <div id="status" style="font-weight: bold; color: var(--primary);"></div>
+                <button class="brutal-btn" style="background: white; color: var(--dark);" onclick="switchPage('homePage')">🏠 BACK</button>
+                <button class="brutal-btn" style="background: var(--secondary);" onclick="document.getElementById('addModal').style.display='flex'">➕ 新增</button>
             </div>
 
-            <div class="extract-section glass-panel">
-                <h2 style="margin-top:0; color:var(--primary);">📝 快速萃取</h2>
-                <textarea id="article" rows="4" placeholder="請將英文文章貼在這裡..."></textarea>
-                <button id="submitBtn" class="btn-main" style="width: 100%; border-radius: 16px;" onclick="processText()">自動解析並加入單字盒</button>
-            </div>
-
-            <div class="toolbar">
-                <h2 style="margin:0; color:var(--text-main);">📚 單字盒</h2>
-                <div style="display:flex; gap: 10px;">
-                    <button class="btn-action" onclick="document.getElementById('addModal').style.display='flex'">➕ 手動新增</button>
-                    <button class="btn-action" onclick="loadVocabulary()">🔄 重新整理</button>
-                </div>
+            <div class="brutal-box" style="padding: 2rem; margin-bottom: 3rem;">
+                <h2 style="margin-top:0; font-size: 2rem; font-weight: 900;">🔥 丟入文章</h2>
+                <textarea id="article" rows="4" placeholder="貼上滿滿的英文，剩下的交給我！"></textarea>
+                <button id="submitBtn" class="brutal-btn" style="width: 100%; font-size: 1.3rem;" onclick="processText()">萃取 & 抓取音標</button>
             </div>
             
-            <div id="vocabContainer" class="vocab-grid">
-                <div style="text-align:center; width:100%; grid-column:1/-1;">點擊重新整理載入單字...</div>
-            </div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 0;">📚 你的單字庫</h2>
+            <div id="vocabContainer" class="vocab-grid"></div>
         </div>
     </div>
 
-    <!-- 手動新增 Modal -->
+    <!-- 新增 Modal -->
     <div id="addModal">
-        <div class="modal-content">
-            <h3>➕ 手動新增單字</h3>
-            <input type="text" id="m-word" placeholder="英文單字 (必填)">
-            <input type="text" id="m-pos" placeholder="詞性 (如: n. / v.)">
-            <input type="text" id="m-phonetic" placeholder="音標 (如: [æp!])">
-            <input type="text" id="m-trans" placeholder="中文翻譯 (必填)">
-            <div class="modal-btns">
-                <button class="btn-cancel" onclick="document.getElementById('addModal').style.display='none'">取消</button>
-                <button class="btn-confirm" onclick="manualAddWord()">確認新增</button>
+        <div class="brutal-box modal-content">
+            <h2 style="margin-top:0;">➕ 手動擴充</h2>
+            <input type="text" id="m-word" placeholder="單字 (必填)" style="width:100%; padding:10px; box-sizing:border-box;">
+            <input type="text" id="m-pos" placeholder="詞性" style="width:100%; padding:10px; box-sizing:border-box;">
+            <input type="text" id="m-phonetic" placeholder="音標" style="width:100%; padding:10px; box-sizing:border-box;">
+            <input type="text" id="m-trans" placeholder="中文翻譯 (必填)" style="width:100%; padding:10px; box-sizing:border-box;">
+            <div style="display:flex; gap:10px; margin-top:10px;">
+                <button class="brutal-btn" style="background:white; color:black; flex:1;" onclick="document.getElementById('addModal').style.display='none'">取消</button>
+                <button class="brutal-btn" style="flex:1;" onclick="manualAddWord()">儲存</button>
             </div>
         </div>
     </div>
@@ -179,67 +148,106 @@
     <script>
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請記得替換網址
 
-        // 頁面切換
         function switchPage(pageId) {
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('appPage').style.display = 'none';
-            
-            document.getElementById(pageId).style.display = pageId === 'homePage' ? 'flex' : 'block';
+            document.getElementById(pageId).style.display = 'flex';
             if(pageId === 'appPage') loadVocabulary();
-            window.scrollTo(0, 0);
         }
 
-        // 共用狀態顯示
         function showMsg(msg) {
-            document.getElementById('status').innerText = msg;
-            setTimeout(() => { document.getElementById('status').innerText = ""; }, 3000);
+            const el = document.getElementById('status');
+            el.innerText = msg; el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 3000);
         }
 
-        // --- 功能 1：自動萃取 ---
+        // --- 朗讀功能 (Web Speech API) ---
+        function speakWord(word) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US'; // 美式發音
+                utterance.rate = 0.9;     // 語速稍微放慢
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("您的瀏覽器不支援發音功能喔！");
+            }
+        }
+
+        // --- 前端查字典演算法 (繞過 IP 阻擋) ---
+        async function fetchDictFrontend(word) {
+            const variations = [word];
+            if (word.endsWith('ies')) variations.push(word.slice(0, -3) + 'y');
+            if (word.endsWith('es')) variations.push(word.slice(0, -2));
+            if (word.endsWith('s')) variations.push(word.slice(0, -1));
+            if (word.endsWith('ing')) { variations.push(word.slice(0, -3)); variations.push(word.slice(0, -3) + 'e'); }
+            if (word.endsWith('ed')) { variations.push(word.slice(0, -2)); variations.push(word.slice(0, -1)); }
+
+            for (let w of variations) {
+                try {
+                    const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${w}`);
+                    if (res.ok) {
+                        const data = (await res.json())[0];
+                        let phonetic = "無音標", pos = "未知";
+                        if (data.phonetic) phonetic = data.phonetic;
+                        else if (data.phonetics) {
+                            const p = data.phonetics.find(item => item.text);
+                            if (p) phonetic = p.text;
+                        }
+                        if (data.meanings && data.meanings.length > 0) pos = data.meanings[0].partOfSpeech;
+                        return { word: word, pos: pos, phonetic: phonetic };
+                    }
+                } catch(e) {}
+            }
+            return { word: word, pos: "未知", phonetic: "無音標" };
+        }
+
+        // --- 功能 1：自動萃取與前端查詢 ---
         async function processText() {
             const text = document.getElementById('article').value;
             const btn = document.getElementById('submitBtn');
-            if (!text.trim()) return showMsg("⚠️ 請先輸入文章！");
+            if (!text.trim()) return showMsg("⚠️ 喂！文章呢？");
 
-            btn.disabled = true; btn.innerText = "分析中..."; showMsg("⏳ 處理中...");
+            btn.disabled = true; btn.innerText = "🔍 瘋狂查字典中..."; showMsg("⏳ 正在用你的瀏覽器爬取音標...");
+            
             const wordsArray = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
             const uniqueWords = [...new Set(wordsArray)];
+            if (uniqueWords.length === 0) { btn.disabled = false; btn.innerText = "萃取 & 抓取音標"; return showMsg("⚠️ 無有效單字"); }
 
-            if (uniqueWords.length === 0) {
-                btn.disabled = false; btn.innerText = "自動解析並加入單字盒"; return showMsg("⚠️ 無有效單字");
-            }
+            // 在前端平行處理所有單字的字典查詢
+            const enrichedWords = await Promise.all(uniqueWords.map(w => fetchDictFrontend(w)));
 
             try {
+                btn.innerText = "💾 傳送至資料庫...";
                 const res = await fetch(GAS_URL, {
                     method: 'POST',
-                    body: JSON.stringify({ action: 'extract', words: uniqueWords }),
+                    body: JSON.stringify({ action: 'save_extracted', words: enrichedWords }),
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
                 const result = await res.json();
                 if (result.status === 'success') {
-                    showMsg(`✅ 成功萃取 ${result.count} 個單字`);
+                    showMsg(`✅ 爽啦！成功搞定 ${uniqueWords.length} 個單字`);
                     document.getElementById('article').value = '';
                     loadVocabulary();
                 }
-            } catch (err) { showMsg("❌ 連線錯誤"); }
-            finally { btn.disabled = false; btn.innerText = "自動解析並加入單字盒"; }
+            } catch (err) { showMsg("❌ 後端連線死掉了"); }
+            finally { btn.disabled = false; btn.innerText = "萃取 & 抓取音標"; }
         }
 
-        // --- 功能 2：手動新增 ---
         async function manualAddWord() {
             const word = document.getElementById('m-word').value;
             const trans = document.getElementById('m-trans').value;
-            if(!word || !trans) return alert("單字與翻譯為必填欄位！");
+            if(!word || !trans) return alert("單字跟翻譯給我填好！");
 
             const payload = {
-                action: 'add', word: word, trans: trans,
-                pos: document.getElementById('m-pos').value || "未知",
-                phonetic: document.getElementById('m-phonetic').value || "無音標",
-                translation: trans
+                action: 'add',
+                words: [{
+                    word: word, pos: document.getElementById('m-pos').value || "未知",
+                    phonetic: document.getElementById('m-phonetic').value || "無音標"
+                }]
             };
 
             document.getElementById('addModal').style.display = 'none';
-            showMsg("⏳ 新增中...");
+            showMsg("⏳ 寫入中...");
 
             try {
                 await fetch(GAS_URL, {
@@ -247,53 +255,57 @@
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
                 showMsg(`✅ 已新增 ${word}`);
-                // 清空表單
                 document.querySelectorAll('#addModal input').forEach(inp => inp.value = '');
                 loadVocabulary();
             } catch (err) { showMsg("❌ 新增失敗"); }
         }
 
-        // --- 功能 3：刪除單字 ---
         async function deleteWord(word) {
-            if(!confirm(`確定要從單字盒中移除「${word}」嗎？`)) return;
-            
-            showMsg(`⏳ 刪除 ${word} 中...`);
+            if(!confirm(`確定要把「${word}」轟出去嗎？`)) return;
+            showMsg(`⏳ 刪除中...`);
             try {
                 await fetch(GAS_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ action: 'delete', word: word }),
+                    method: 'POST', body: JSON.stringify({ action: 'delete', word: word }),
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
-                showMsg(`✅ 已刪除 ${word}`);
+                showMsg(`✅ 已刪除`);
                 loadVocabulary();
             } catch (err) { showMsg("❌ 刪除失敗"); }
         }
 
-        // --- 功能 4：載入單字 ---
         async function loadVocabulary() {
             const container = document.getElementById('vocabContainer');
-            container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">載入中...</div>';
+            container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">載入中... 🏃‍♂️💨</h2>';
 
             try {
                 const res = await fetch(GAS_URL);
                 const result = await res.json();
                 if (result.status === 'success') {
                     const data = result.data.reverse();
-                    if (data.length === 0) return container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">單字盒空空的，快去萃取或新增單字吧！</div>';
+                    if (data.length === 0) return container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">空空如也，快點塞字進來！</h2>';
 
-                    container.innerHTML = data.map(item => `
-                        <div class="vocab-card glass-panel">
-                            <button class="btn-delete" onclick="deleteWord('${item.word}')">✕</button>
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    container.innerHTML = data.map(item => {
+                        let displayPhonetic = item.phonetic;
+                        if (displayPhonetic !== "無音標" && !displayPhonetic.startsWith('[')) displayPhonetic = `[ ${displayPhonetic} ]`;
+
+                        return `
+                        <div class="brutal-box vocab-card">
+                            <div class="tape"></div>
+                            <div class="word-header">
                                 <h3 class="word-title">${item.word}</h3>
                                 <span class="pos-badge">${item.pos}</span>
                             </div>
-                            <div class="phonetic">${item.phonetic}</div>
+                            <div class="phonetic">${displayPhonetic}</div>
                             <div class="translation">${item.translation}</div>
+                            <div class="card-actions">
+                                <button class="btn-speak" onclick="speakWord('${item.word}')">🔊 唸給我聽</button>
+                                <button class="btn-del" onclick="deleteWord('${item.word}')">✕</button>
+                            </div>
                         </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 }
-            } catch (err) { container.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:red;">讀取失敗</div>'; }
+            } catch (err) { container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; color:red;">讀取失敗 💀</h2>'; }
         }
     </script>
 </body>
