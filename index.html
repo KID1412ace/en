@@ -5,145 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>溫暖手帳單字庫</title>
     <style>
-        /* 溫暖柔和調色盤 */
         :root {
-            --primary: #E07A5F;       /* 溫暖的赤陶/暖橘色 */
-            --primary-hover: #D0694F; 
-            --secondary: #81B29A;     /* 柔和的莫蘭迪綠 */
-            --secondary-hover: #6EA087;
-            --bg-color: #FDFBF7;      /* 帶點暖意的米白背景 */
+            --primary: #E07A5F;
+            --primary-hover: #D0694F;
+            --secondary: #F2CC8F;
+            --bg-light: #FDFBF7;
             --card-bg: #FFFFFF;
-            --text-main: #5C4D43;     /* 溫和的深咖啡色取代死黑 */
+            --text-main: #5C4D43;
             --text-muted: #9E8C7E;
-            --border-color: #F0E6D8;  /* 柔和的邊框色 */
         }
-        
-        body { 
-            font-family: 'Nunito', 'Varela Round', 'Segoe UI', Tahoma, sans-serif; /* 使用較圓潤的字體 */
-            background-color: var(--bg-color);
+
+        /* 讓整個網頁可以滿版 */
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Nunito', 'Varela Round', 'Segoe UI', Tahoma, sans-serif;
             color: var(--text-main);
-            max-width: 900px; 
-            margin: 2rem auto; 
-            padding: 0 1.5rem;
+            overflow-x: hidden;
         }
 
-        .header-section {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 20px; /* 更大的圓角 */
-            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.05); /* 帶有暖色調的柔和陰影 */
-            margin-bottom: 2.5rem;
-            border: 1px solid var(--border-color);
+        /* --- 主頁動態背景設計 --- */
+        #homePage {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* 暖色調流動漸層 */
+            background: linear-gradient(-45deg, #FFDEE9, #F6D365, #FDA085, #FF9A9E);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            transition: opacity 0.8s ease-out;
         }
 
-        h2 { margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; font-weight: 700;}
-        
-        textarea { 
-            width: 100%; padding: 16px; margin-bottom: 16px; box-sizing: border-box; 
-            border: 2px solid var(--border-color); border-radius: 12px; font-size: 16px; 
-            resize: vertical; color: var(--text-main); background-color: #FCFAFB;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .home-title {
+            font-size: 3.5rem; font-weight: 800; color: #FFF;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px;
+        }
+        .home-subtitle {
+            font-size: 1.2rem; color: #FFF; margin-bottom: 40px; font-weight: 500;
+        }
+        .enter-btn {
+            padding: 16px 40px; font-size: 1.2rem; font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.9); color: var(--primary);
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(224, 122, 95, 0.3);
             transition: all 0.3s ease;
         }
-        textarea:focus { outline: none; border-color: var(--primary); background-color: #FFF; box-shadow: 0 0 0 4px rgba(224, 122, 95, 0.1); }
+        .enter-btn:hover {
+            transform: translateY(-3px) scale(1.05); background-color: #FFF;
+            box-shadow: 0 15px 30px rgba(224, 122, 95, 0.4);
+        }
+
+        /* --- 應用程式頁面設計 --- */
+        #appPage {
+            display: none; /* 初始隱藏 */
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            box-sizing: border-box;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+
+        .header-section {
+            background: var(--card-bg); padding: 2.5rem; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(139, 115, 85, 0.05); margin-bottom: 2.5rem;
+        }
+        h2 { margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px;}
+        textarea { 
+            width: 100%; padding: 16px; margin-bottom: 16px; box-sizing: border-box; 
+            border: 2px solid #F0E6D8; border-radius: 12px; font-size: 16px; resize: vertical; 
+            background-color: #FCFAFB; transition: all 0.3s ease;
+        }
+        textarea:focus { outline: none; border-color: var(--primary); background-color: #FFF; }
         
-        button { 
-            width: 100%; padding: 14px; font-size: 16px; font-weight: 600; letter-spacing: 1px;
+        button.action-btn { 
+            width: 100%; padding: 14px; font-size: 16px; font-weight: 600;
             cursor: pointer; background: var(--primary); color: white; border: none; 
             border-radius: 12px; transition: all 0.3s ease; margin-bottom: 10px;
         }
-        button:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(224, 122, 95, 0.2); }
-        button:disabled { background: #DBCDBF; cursor: not-allowed; transform: none; box-shadow: none; }
+        button.action-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        button.action-btn:disabled { background: #DBCDBF; cursor: not-allowed; transform: none; }
         
-        .btn-secondary { background: var(--secondary); width: auto; padding: 10px 24px; border-radius: 10px;}
-        .btn-secondary:hover { background: var(--secondary-hover); box-shadow: 0 4px 12px rgba(129, 178, 154, 0.2);}
+        .btn-refresh { background: #81B29A; padding: 10px 24px; border-radius: 10px; color: white; border: none; cursor: pointer;}
+        .btn-refresh:hover { background: #6EA087; }
         
         #status { font-weight: 600; text-align: center; min-height: 24px; margin-top: 10px;}
-        .success { color: var(--secondary); } .error { color: #E56B6F; } .loading { color: var(--text-muted); }
+        .success { color: #81B29A; } .error { color: #E56B6F; } .loading { color: var(--text-muted); }
 
-        /* 單字卡片網格 */
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
         .vocab-card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.04);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            background: var(--card-bg); padding: 1.5rem; border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.04); border: 1px solid #F0E6D8;
+            transition: all 0.3s ease; display: flex; flex-direction: column;
         }
-        .vocab-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(139, 115, 85, 0.08);
-            border-color: #E2D4C3;
-        }
+        .vocab-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(139, 115, 85, 0.08); }
         .word-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .word-title { font-size: 1.6rem; font-weight: bold; margin: 0; color: #4A3F35; letter-spacing: 0.5px;}
+        .word-title { font-size: 1.6rem; font-weight: bold; margin: 0; color: #4A3F35; }
         
-        /* 溫暖系詞性標籤 */
-        .pos-badge {
-            font-size: 0.8rem; font-weight: 600; padding: 4px 10px;
-            border-radius: 20px; text-transform: lowercase; letter-spacing: 0.5px;
-        }
-        .pos-noun { background: #FDE2E4; color: #C85A65; }       /* 柔粉色 */
-        .pos-verb { background: #FFE5D9; color: #C96A4B; }       /* 暖橘色 */
-        .pos-adjective { background: #E9EDC9; color: #6B7B4C; }  /* 奶茶綠 */
-        .pos-adverb { background: #E2ECE9; color: #5B7B7A; }     /* 莫蘭迪灰藍 */
-        .pos-unknown { background: #F4F1ED; color: #9E8C7E; }    /* 燕麥色 */
+        .pos-badge { font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; text-transform: lowercase; }
+        .pos-noun { background: #FDE2E4; color: #C85A65; }
+        .pos-verb { background: #FFE5D9; color: #C96A4B; }
+        .pos-adjective { background: #E9EDC9; color: #6B7B4C; }
+        .pos-adverb { background: #E2ECE9; color: #5B7B7A; }
+        .pos-unknown { background: #F4F1ED; color: #9E8C7E; }
 
-        .phonetic { color: var(--text-muted); font-family: 'Courier New', Courier, monospace; margin-bottom: 16px; font-size: 0.95rem;}
-        .translation { font-size: 1.15rem; font-weight: 500; color: var(--text-main); border-top: 2px dashed var(--border-color); padding-top: 16px; margin-top: auto;}
-        .empty-msg { text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-top: 2rem; grid-column: 1 / -1;}
+        .phonetic { color: var(--text-muted); font-family: 'Courier New', Courier, monospace; margin-bottom: 16px; }
+        .translation { font-size: 1.15rem; font-weight: 500; border-top: 2px dashed #F0E6D8; padding-top: 16px; margin-top: auto;}
+        .empty-msg { text-align: center; color: var(--text-muted); font-size: 1.1rem; grid-column: 1 / -1;}
     </style>
 </head>
 <body>
 
-    <div class="header-section">
-        <h2>☕ 溫暖手帳單字萃取</h2>
-        <textarea id="article" rows="5" placeholder="貼上英文文章，系統會自動抓取 KK 音標與精準詞性..."></textarea>
-        <button id="submitBtn" onclick="processText()">萃取並放入單字盒</button>
-        <div id="status"></div>
+    <!-- 主頁 -->
+    <div id="homePage">
+        <div class="home-title">Warm Vocab</div>
+        <div class="home-subtitle">打造專屬於你的溫暖手帳單字庫</div>
+        <button class="enter-btn" onclick="enterApp()">開啟手帳 ➔</button>
     </div>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 0.5rem;">
-        <h2>📚 我的單字盒</h2>
-        <button id="loadBtn" class="btn-secondary" onclick="loadVocabulary()">🔄 重新整理</button>
-    </div>
-    
-    <div id="vocabContainer" class="vocab-grid">
-        <div class="empty-msg">點擊上方按鈕載入單字...</div>
+    <!-- 系統主體 -->
+    <div id="appPage">
+        <div class="app-container">
+            <div class="header-section">
+                <h2>☕ 溫暖手帳單字萃取</h2>
+                <textarea id="article" rows="5" placeholder="貼上英文文章，系統將自動解析音標與精準詞性..."></textarea>
+                <button id="submitBtn" class="action-btn" onclick="processText()">萃取並放入單字盒</button>
+                <div id="status"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 0.5rem;">
+                <h2>📚 我的單字盒</h2>
+                <button id="loadBtn" class="btn-refresh" onclick="loadVocabulary()">🔄 重新整理</button>
+            </div>
+            
+            <div id="vocabContainer" class="vocab-grid">
+                <div class="empty-msg">單字盒載入中...</div>
+            </div>
+        </div>
     </div>
 
     <script>
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請記得替換網址
 
-        window.onload = loadVocabulary;
+        // 頁面切換特效
+        function enterApp() {
+            const home = document.getElementById('homePage');
+            const app = document.getElementById('appPage');
+            home.style.opacity = '0';
+            setTimeout(() => {
+                home.style.display = 'none';
+                app.style.display = 'block';
+                // 進入系統後自動載入一次資料
+                loadVocabulary();
+            }, 500); // 對應 CSS 的 transition 時間
+        }
 
         async function processText() {
             const text = document.getElementById('article').value;
             const btn = document.getElementById('submitBtn');
             
-            if (!text.trim()) {
-                showMessage("請先輸入文章內容喔！", "error");
-                return;
-            }
+            if (!text.trim()) { showMessage("請先輸入文章內容喔！", "error"); return; }
 
             btn.disabled = true;
-            btn.innerText = "努力翻找字典中...";
-            showMessage("正在為您抓取 KK 音標與詞性，請稍候...", "loading");
+            btn.innerText = "智能分析與字根還原中...";
+            showMessage("正在為您抓取音標與詞性，請稍候...", "loading");
 
             const wordsArray = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
             const uniqueWords = [...new Set(wordsArray)];
 
             if (uniqueWords.length === 0) {
                 showMessage("沒有找到有效的英文單字。", "error");
-                resetButton(btn, "萃取並放入單字盒");
-                return;
+                resetButton(btn, "萃取並放入單字盒"); return;
             }
 
             try {
@@ -191,13 +229,16 @@
                         let posClass = 'pos-unknown';
                         const pos = (item.pos || "未知").toLowerCase();
                         
-                        // 針對 Yahoo 字典的詞寫格式進行判斷 (例如 n., v., adj.)
-                        if (pos.includes('n.') || pos.includes('noun')) posClass = 'pos-noun';
-                        else if (pos.includes('v.') || pos.includes('verb') || pos.includes('vi.') || pos.includes('vt.')) posClass = 'pos-verb';
-                        else if (pos.includes('adj') || pos.includes('a.')) posClass = 'pos-adjective';
-                        else if (pos.includes('adv') || pos.includes('ad.')) posClass = 'pos-adverb';
+                        if (pos.includes('noun')) posClass = 'pos-noun';
+                        else if (pos.includes('verb')) posClass = 'pos-verb';
+                        else if (pos.includes('adj')) posClass = 'pos-adjective';
+                        else if (pos.includes('adv')) posClass = 'pos-adverb';
 
-                        const phoneticText = item.phonetic && item.phonetic !== "無音標" ? item.phonetic : '無音標';
+                        // 格式化音標加上 [] 符號
+                        let displayPhonetic = item.phonetic;
+                        if (displayPhonetic !== "無音標" && !displayPhonetic.startsWith('[')) {
+                            displayPhonetic = `[ ${displayPhonetic} ]`;
+                        }
 
                         return `
                             <div class="vocab-card">
@@ -205,7 +246,7 @@
                                     <h3 class="word-title">${item.word}</h3>
                                     <span class="pos-badge ${posClass}">${item.pos}</span>
                                 </div>
-                                <div class="phonetic">${phoneticText}</div>
+                                <div class="phonetic">${displayPhonetic}</div>
                                 <div class="translation">${item.translation}</div>
                             </div>
                         `;
