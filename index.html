@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 經典學習手冊溫暖色系 --- */
         :root {
             --bg-color: #F4F1EA; --primary: #D9534F; --secondary: #F0AD4E;  
             --tertiary: #5BC0DE; --dark: #2C3E50; --border-thick: 4px solid var(--dark);
@@ -42,7 +41,6 @@
         
         .app-container { width: 100%; max-width: 900px; }
         
-        /* 手冊化頂部導覽列 */
         .workbook-header { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 550px; background: var(--paper-bg); border: var(--border-thick); border-radius: 12px; padding: 12px 20px; box-sizing: border-box; box-shadow: var(--box-shadow-card); margin-bottom: 25px; }
         
         .hero-title { font-size: 4rem; font-weight: 900; line-height: 1; color: var(--dark); text-shadow: 3px 3px 0px var(--secondary); margin: 0 0 15px 0; text-align: center;}
@@ -67,14 +65,15 @@
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-container.is-flipped .flip-inner { transform: rotateY(180deg); }
         
-        /* 💡 【再往下微調】將上方內距從 25px 增加到 45px，完美下移 */
+        /* 💡 【黃金比例置中】完美垂直與水平置中 */
         .flip-front, .flip-back { 
             position: absolute; width: 100%; height: 100%; 
             backface-visibility: hidden; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             background: var(--paper-bg); border-radius: 8px; 
-            padding: 45px 15px 15px 15px; 
+            padding: 20px; 
             box-sizing: border-box; 
+            gap: 8px;
         }
         .flip-back { transform: rotateY(180deg); overflow-y: auto;}
         
@@ -82,10 +81,10 @@
         .status-badge { position: absolute; top: -12px; right: -10px; background: var(--primary); color: #FFF; border: 2px solid var(--dark); padding: 2px 8px; font-weight: 900; font-size: 0.75rem; border-radius: 10px; box-shadow: 2px 2px 0px var(--dark); z-index: 5;}
         .status-badge.learned { background: var(--success); }
         
-        .word-title { font-size: 2rem; font-weight: 900; margin: 0 0 5px 0; color: var(--dark); word-break: break-all; }
-        .pos-badge { font-size: 0.9rem; font-weight: bold; padding: 2px 8px; border: 2px solid var(--dark); border-radius: 6px; background: var(--secondary); display: inline-block; margin-bottom: 6px;}
-        .phonetic { font-size: 1.1rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 3px 8px; border-radius: 4px; display: inline-block;}
-        .translation-huge { font-size: 1.6rem; font-weight: 900; color: var(--primary); margin-bottom: 4px; word-break: break-all;}
+        .word-title { font-size: 2rem; font-weight: 900; margin: 0; color: var(--dark); word-break: break-all; }
+        .pos-badge { font-size: 0.9rem; font-weight: bold; padding: 2px 8px; border: 2px solid var(--dark); border-radius: 6px; background: var(--secondary); display: inline-block; margin: 0;}
+        .phonetic { font-size: 1.1rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 3px 8px; border-radius: 4px; display: inline-block; margin: 0;}
+        .translation-huge { font-size: 1.6rem; font-weight: 900; color: var(--primary); margin: 0; word-break: break-all;}
         .ai-note { font-size: 0.85rem; font-weight: bold; color: #444; background: #FFF9E6; padding: 6px; border-radius: 6px; border: 2px solid var(--dark); margin-top: 4px; width: 95%; text-align: left; box-sizing: border-box;}
         
         .card-actions { display: flex; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 2px dashed rgba(44,62,80,0.2); }
@@ -107,14 +106,12 @@
     <div class="decor decor-blob"></div>
     <div id="status">系統訊息</div>
 
-    <!-- 首頁 -->
     <div id="homePage">
         <h1 class="hero-title">VOCAB<br>WORKBOOK</h1>
         <div class="hero-subtitle">📖 AI 智慧英文學習手冊 📖</div>
         <button class="brutal-btn" style="font-size: 1.5rem; padding: 15px 35px;" onclick="switchPage('appPage')">翻開手冊 ➔</button>
     </div>
 
-    <!-- 主頁 -->
     <div id="appPage">
         <div class="app-container">
             <div class="workbook-header">
@@ -152,7 +149,6 @@
         </div>
     </div>
 
-    <!-- 訓練模式 -->
     <div id="trainPage">
         <div class="workbook-header">
             <button class="brutal-btn" style="background: var(--paper-bg); color: var(--dark); padding: 6px 14px; font-size: 0.95rem;" onclick="switchPage('appPage')">🔙 退出</button>
@@ -167,7 +163,6 @@
         </div>
     </div>
 
-    <!-- AI 測驗模式頁面 -->
     <div id="quizPage">
         <div class="workbook-header">
             <button class="brutal-btn" style="background: var(--paper-bg); color: var(--dark); padding: 6px 14px; font-size: 0.95rem;" onclick="switchPage('appPage')">🔙 退出</button>
@@ -176,7 +171,6 @@
         <div class="train-container" id="quizContainer"></div>
     </div>
 
-    <!-- 新增 Modal -->
     <div id="addModal">
         <div class="brutal-box modal-content">
             <h3 style="margin-top:0; font-size: 1.5rem;">➕ 手動新增單字</h3>
@@ -193,7 +187,7 @@
     </div>
 
     <script>
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請確保填入你的網址
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec';
         
         let vocabCache = []; 
         let currentCategory = '全部'; 
@@ -365,7 +359,7 @@
                                 <h3 class="word-title">${item.word}</h3>
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="phonetic">${item.phonetic}</div>
-                                <div style="font-size:0.8rem; color:#555; margin-top:6px;">💡 ${item.mnemonic || ''}</div>
+                                <div style="font-size:0.8rem; color:#555; margin-top:2px;">💡 ${item.mnemonic || ''}</div>
                             </div>
                             <div class="flip-back">
                                 <div class="cat-badge">${item.category}</div>
@@ -406,14 +400,14 @@
                         <div class="flip-inner">
                             <div class="flip-front">
                                 <h3 class="word-title" style="text-align: center;">${item.word}</h3>
-                                <div class="phonetic" style="font-size: 1.3rem;">${item.phonetic}</div>
-                                <div style="font-size:0.85rem; color:#555; margin-top:8px;">💡 ${item.mnemonic || ''}</div>
-                                <div style="font-size:0.75rem; color:#aaa; margin-top:4px;">👉 點擊翻面</div>
+                                <div class="phonetic" style="font-size: 1.1rem;">${item.phonetic}</div>
+                                <div style="font-size:0.8rem; color:#555;">💡 ${item.mnemonic || ''}</div>
+                                <div style="font-size:0.75rem; color:#aaa;">👉 點擊翻面</div>
                             </div>
                             <div class="flip-back">
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="translation-huge" style="text-align: center;">${item.translation}</div>
-                                <div class="ai-note" style="margin-top:8px;"><strong>📖 例句：</strong><br>${item.example || ''}</div>
+                                <div class="ai-note"><strong>📖 例句：</strong><br>${item.example || ''}</div>
                             </div>
                         </div>
                     </div>
