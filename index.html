@@ -42,7 +42,7 @@
         
         .app-container { width: 100%; max-width: 900px; }
         
-        /* 💡 【手冊化頂部導覽列】統整成質感筆記本橫條 */
+        /* 手冊化頂部導覽列 */
         .workbook-header { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 550px; background: var(--paper-bg); border: var(--border-thick); border-radius: 12px; padding: 12px 20px; box-sizing: border-box; box-shadow: var(--box-shadow-card); margin-bottom: 25px; }
         
         .hero-title { font-size: 4rem; font-weight: 900; line-height: 1; color: var(--dark); text-shadow: 3px 3px 0px var(--secondary); margin: 0 0 15px 0; text-align: center;}
@@ -66,14 +66,22 @@
         .flip-container { perspective: 1000px; flex-grow: 1; cursor: pointer; min-height: 200px; margin-top: 5px; }
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-container.is-flipped .flip-inner { transform: rotateY(180deg); }
-        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--paper-bg); border-radius: 8px; padding: 10px; box-sizing: border-box;}
+        
+        /* 💡 【完美下移對齊】增加上方內距，讓單字向下移動不壓邊線 */
+        .flip-front, .flip-back { 
+            position: absolute; width: 100%; height: 100%; 
+            backface-visibility: hidden; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            background: var(--paper-bg); border-radius: 8px; 
+            padding: 25px 15px 15px 15px; 
+            box-sizing: border-box; 
+        }
         .flip-back { transform: rotateY(180deg); overflow-y: auto;}
         
         .cat-badge { position: absolute; top: 0; left: 0; background: var(--tertiary); border-bottom: 2px solid var(--dark); border-right: 2px solid var(--dark); padding: 2px 8px; font-weight: 900; font-size: 0.75rem; border-radius: 8px 0 6px 0;}
         .status-badge { position: absolute; top: -12px; right: -10px; background: var(--primary); color: #FFF; border: 2px solid var(--dark); padding: 2px 8px; font-weight: 900; font-size: 0.75rem; border-radius: 10px; box-shadow: 2px 2px 0px var(--dark); z-index: 5;}
         .status-badge.learned { background: var(--success); }
         
-        /* 💡 【防止溢位】限制字體最大尺寸，確保完美置中與對齊 */
         .word-title { font-size: 2rem; font-weight: 900; margin: 0 0 5px 0; color: var(--dark); word-break: break-all; }
         .pos-badge { font-size: 0.9rem; font-weight: bold; padding: 2px 8px; border: 2px solid var(--dark); border-radius: 6px; background: var(--secondary); display: inline-block; margin-bottom: 6px;}
         .phonetic { font-size: 1.1rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 3px 8px; border-radius: 4px; display: inline-block;}
@@ -84,7 +92,6 @@
         .btn-act { flex: 1; background: var(--paper-bg); color: var(--dark); border: 2px solid var(--dark); border-radius: 6px; font-size: 0.95rem; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; padding: 6px; box-shadow: 2px 2px 0px var(--dark); transition: 0.1s;}
         .btn-act:active { transform: translate(1px, 1px); box-shadow: none; }
         
-        /* 💡 【完美手冊訓練模式】卡片與按鈕絕對不跑版 */
         .train-container { width: 100%; max-width: 550px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;}
         .train-card { width: 100%; min-height: 360px; padding: 1.5rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;}
         .train-controls { display: flex; width: 100%; max-width: 550px; gap: 12px; margin-top: 20px; justify-content: space-between;}
@@ -145,7 +152,7 @@
         </div>
     </div>
 
-    <!-- 訓練模式 (💡 完美整合筆記本頂部導覽列) -->
+    <!-- 訓練模式 -->
     <div id="trainPage">
         <div class="workbook-header">
             <button class="brutal-btn" style="background: var(--paper-bg); color: var(--dark); padding: 6px 14px; font-size: 0.95rem;" onclick="switchPage('appPage')">🔙 退出</button>
@@ -186,7 +193,7 @@
     </div>
 
     <script>
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請填入你的網址
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請確保填入你的網址
         
         let vocabCache = []; 
         let currentCategory = '全部'; 
