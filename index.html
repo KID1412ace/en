@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 EPIC VOCAB | AI 智能翻轉手帳</title>
+    <title>🔥 EPIC VOCAB | AI 智能全能手帳</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,72 +33,66 @@
         @keyframes morphBlob { 0% { transform: scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 100% { transform: scale(1.1) rotate(20deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
 
         .brutal-box { background: #FFF; border: var(--border-thick); border-radius: 20px; box-shadow: var(--box-shadow-huge); position: relative; z-index: 10; transition: all 0.2s; }
-        .brutal-btn { background: var(--primary); color: #FFF; border: var(--border-thick); padding: 15px 30px; font-size: 1.4rem; font-family: 'Nunito', sans-serif; font-weight: 900; border-radius: 15px; box-shadow: 6px 6px 0px var(--dark); cursor: pointer; transition: 0.1s; text-transform: uppercase; }
-        .brutal-btn:hover { transform: translate(-3px, -3px); box-shadow: var(--box-shadow-hover); background: var(--secondary); color: var(--dark); }
-        .brutal-btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0px var(--dark); }
-        .brutal-btn:disabled { filter: grayscale(80%); cursor: not-allowed; transform: none; box-shadow: 6px 6px 0px var(--dark); }
+        .brutal-btn { background: var(--primary); color: #FFF; border: var(--border-thick); padding: 12px 24px; font-size: 1.2rem; font-family: 'Nunito', sans-serif; font-weight: 900; border-radius: 12px; box-shadow: 5px 5px 0px var(--dark); cursor: pointer; transition: 0.1s; text-transform: uppercase; }
+        .brutal-btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--dark); background: var(--secondary); color: var(--dark); }
+        .brutal-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
+        .brutal-btn:disabled { filter: grayscale(80%); cursor: not-allowed; }
 
-        #homePage, #appPage, #trainPage { min-height: 100vh; padding: 3rem 1.5rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10;}
-        #appPage, #trainPage { display: none; justify-content: flex-start; padding-top: 1.5rem;}
+        #homePage, #appPage, #trainPage, #quizPage { min-height: 100vh; padding: 2rem 1rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10;}
+        #appPage, #trainPage, #quizPage { display: none; justify-content: flex-start; padding-top: 1.5rem;}
         
         .app-container { width: 100%; max-width: 900px; }
         .nav-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center; width: 100%; max-width: 600px;}
         
-        /* 💡 【修復首頁對齊】優化標題大小與間距，避免重疊 */
-        .hero-title { font-size: 5.5rem; font-weight: 900; line-height: 1; color: var(--bg-color); text-shadow: 6px 6px 0px var(--dark), -3px -3px 0px var(--primary); margin: 0 0 20px 0; text-align: center; transform: rotate(-2deg); -webkit-text-stroke: 3px var(--dark);}
-        .hero-subtitle { font-size: 1.5rem; font-weight: bold; background: var(--tertiary); color: var(--dark); border: var(--border-thick); padding: 10px 25px; border-radius: 50px; transform: rotate(1deg); margin-bottom: 30px; box-shadow: 6px 6px 0px var(--dark); text-align: center;}
+        .hero-title { font-size: 5rem; font-weight: 900; line-height: 1; color: var(--bg-color); text-shadow: 6px 6px 0px var(--dark), -3px -3px 0px var(--primary); margin: 0 0 20px 0; text-align: center; transform: rotate(-2deg); -webkit-text-stroke: 3px var(--dark);}
+        .hero-subtitle { font-size: 1.4rem; font-weight: bold; background: var(--tertiary); color: var(--dark); border: var(--border-thick); padding: 10px 20px; border-radius: 50px; transform: rotate(1deg); margin-bottom: 30px; box-shadow: 6px 6px 0px var(--dark); text-align: center;}
 
-        textarea, .brutal-input { width: 100%; padding: 20px; margin-bottom: 15px; border: var(--border-thick); border-radius: 16px; font-size: 1.5rem; font-weight: 900; color: var(--dark); box-shadow: inset 6px 6px 0px rgba(62, 39, 35, 0.08); box-sizing: border-box; background: #FFF; font-family: 'Nunito', sans-serif;}
+        textarea, .brutal-input { width: 100%; padding: 15px; margin-bottom: 12px; border: var(--border-thick); border-radius: 14px; font-size: 1.3rem; font-weight: 900; color: var(--dark); box-shadow: inset 5px 5px 0px rgba(62, 39, 35, 0.08); box-sizing: border-box; background: #FFF; font-family: 'Nunito', sans-serif;}
         textarea { resize: vertical; }
-        textarea:focus, .brutal-input:focus { outline: none; background: #FFFCF2; border-color: var(--secondary); }
 
-        .filter-section { margin-bottom: 25px; }
-        .filter-title { font-size: 1.2rem; font-weight: 900; margin-bottom: 10px; color: var(--dark); }
-        .filter-bar { display: flex; gap: 10px; overflow-x: auto; padding: 5px; scrollbar-width: none; margin-bottom: 15px;}
+        .filter-section { margin-bottom: 20px; }
+        .filter-title { font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; color: var(--dark); }
+        .filter-bar { display: flex; gap: 8px; overflow-x: auto; padding: 5px; scrollbar-width: none; margin-bottom: 10px;}
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-btn { background: #FFF; color: var(--dark); border: 3px solid var(--dark); padding: 8px 18px; font-size: 1.1rem; font-weight: 900; border-radius: 50px; cursor: pointer; white-space: nowrap; box-shadow: 3px 3px 0px var(--dark); transition: 0.2s;}
-        .filter-btn:hover { transform: translateY(-2px); box-shadow: 5px 5px 0px var(--dark); background: var(--secondary);}
+        .filter-btn { background: #FFF; color: var(--dark); border: 3px solid var(--dark); padding: 6px 15px; font-size: 1rem; font-weight: 900; border-radius: 50px; cursor: pointer; white-space: nowrap; box-shadow: 3px 3px 0px var(--dark); transition: 0.2s;}
+        .filter-btn:hover { background: var(--secondary);}
         .filter-btn.active { background: var(--dark); color: #FFF; transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
 
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 3rem; padding-bottom: 5rem;}
-        .vocab-card { padding: 2.5rem 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; background: #FFF; transform: rotate(-1deg); }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; padding-bottom: 4rem;}
+        .vocab-card { padding: 2.5rem 1.2rem 1.2rem 1.2rem; display: flex; flex-direction: column; background: #FFF; transform: rotate(-1deg); }
         .vocab-card.learned { border-color: var(--success); opacity: 0.85;}
         .vocab-card:nth-child(even) { transform: rotate(1deg); }
-        .vocab-card:hover { transform: scale(1.03) rotate(0deg) translateY(-5px); box-shadow: var(--box-shadow-hover); z-index: 20;}
-        .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 120px; height: 35px; background: rgba(255, 107, 107, 0.9); border: 4px solid var(--dark); z-index: 2;}
-        .vocab-card:nth-child(even) .tape { background: rgba(78, 205, 196, 0.9); transform: translateX(-50%) rotate(3deg); }
+        .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 110px; height: 32px; background: rgba(255, 107, 107, 0.9); border: 4px solid var(--dark); z-index: 2;}
 
-        .flip-container { perspective: 1000px; flex-grow: 1; cursor: pointer; min-height: 200px; margin-top: 5px; }
+        /* 3D 翻牌修正 */
+        .flip-container { perspective: 1000px; flex-grow: 1; cursor: pointer; min-height: 220px; margin-top: 5px; }
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-container.is-flipped .flip-inner { transform: rotateY(180deg); }
-        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #FFF; border-radius: 12px;}
-        .flip-back { transform: rotateY(180deg); }
+        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #FFF; border-radius: 12px; padding: 10px; box-sizing: border-box;}
+        .flip-back { transform: rotateY(180deg); overflow-y: auto;}
         
-        .cat-badge { position: absolute; top: 0; left: 0; background: var(--tertiary); border-bottom: 3px solid var(--dark); border-right: 3px solid var(--dark); padding: 4px 10px; font-weight: 900; font-size: 0.9rem; border-radius: 12px 0 10px 0;}
-        .status-badge { position: absolute; top: -20px; right: -15px; background: var(--primary); color: #FFF; border: 3px solid var(--dark); padding: 5px 12px; font-weight: 900; border-radius: 20px; transform: rotate(10deg); box-shadow: 3px 3px 0px var(--dark); z-index: 5;}
+        .cat-badge { position: absolute; top: 0; left: 0; background: var(--tertiary); border-bottom: 3px solid var(--dark); border-right: 3px solid var(--dark); padding: 3px 8px; font-weight: 900; font-size: 0.8rem; border-radius: 10px 0 8px 0;}
+        .status-badge { position: absolute; top: -18px; right: -12px; background: var(--primary); color: #FFF; border: 3px solid var(--dark); padding: 4px 10px; font-weight: 900; font-size: 0.9rem; border-radius: 15px; transform: rotate(10deg); box-shadow: 3px 3px 0px var(--dark); z-index: 5;}
         .status-badge.learned { background: var(--success); }
         
-        .word-title { font-size: 2.5rem; font-weight: 900; margin: 0 0 10px 0; color: var(--dark); }
-        .pos-badge { font-size: 1.1rem; font-weight: bold; padding: 4px 15px; border: 3px solid var(--dark); border-radius: 10px; background: var(--secondary); box-shadow: 3px 3px 0px var(--dark); display: inline-block; margin-bottom: 15px;}
-        .phonetic { font-size: 1.4rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 6px 12px; border-radius: 8px; display: inline-block; transform: skewX(-6deg);}
-        .translation-huge { font-size: 2.2rem; font-weight: 900; color: var(--primary); border-bottom: 5px dashed var(--dark); padding-bottom: 10px;}
-        .flip-hint { font-size: 0.9rem; font-weight: 900; color: #AAA; margin-top: 15px; animation: bounceHint 1.5s infinite; }
-        @keyframes bounceHint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+        .word-title { font-size: 2.2rem; font-weight: 900; margin: 0 0 5px 0; color: var(--dark); }
+        .pos-badge { font-size: 1rem; font-weight: bold; padding: 2px 10px; border: 2px solid var(--dark); border-radius: 8px; background: var(--secondary); box-shadow: 2px 2px 0px var(--dark); display: inline-block; margin-bottom: 8px;}
+        .phonetic { font-size: 1.2rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 4px 10px; border-radius: 6px; display: inline-block; transform: skewX(-4deg);}
+        .translation-huge { font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 5px;}
+        .ai-note { font-size: 0.9rem; font-weight: bold; color: #555; background: #FFF3E0; padding: 6px 10px; border-radius: 8px; border: 2px solid var(--dark); margin-top: 5px; width: 90%; text-align: left;}
         
-        .card-actions { display: flex; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 3px dashed rgba(0,0,0,0.1); }
-        .btn-act { flex: 1; background: var(--bg-color); color: var(--dark); border: 3px solid var(--dark); border-radius: 10px; font-size: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; padding: 10px; box-shadow: 4px 4px 0px var(--dark); transition: 0.1s;}
-        .btn-act:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px var(--dark); }
+        .card-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 3px dashed rgba(0,0,0,0.1); }
+        .btn-act { flex: 1; background: var(--bg-color); color: var(--dark); border: 3px solid var(--dark); border-radius: 8px; font-size: 1rem; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; padding: 8px; box-shadow: 3px 3px 0px var(--dark); transition: 0.1s;}
+        .btn-act:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
         
-        /* 💡 【修復訓練模式排版】調整容器與卡片大小，確保按鈕完美對齊 */
-        .train-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;}
-        .train-card { width: 100%; min-height: 320px; padding: 2.5rem 2rem; box-sizing: border-box;}
-        .train-card .word-title { font-size: 3.5rem; margin-bottom: 10px;}
-        .train-card .translation-huge { font-size: 2.8rem; }
-        .train-controls { display: flex; width: 100%; gap: 15px; margin-top: 25px; justify-content: space-between;}
+        /* 💡 【完美修復跑版】訓練模式固定尺寸與置中 */
+        .train-container { width: 100%; max-width: 550px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;}
+        .train-card { width: 100%; min-height: 380px; padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;}
+        .train-controls { display: flex; width: 100%; gap: 15px; margin-top: 20px; justify-content: space-between;}
         
-        #status { font-size: 1.4rem; font-weight: 900; background: #FFF; color: var(--dark); padding: 12px 30px; border: var(--border-thick); border-radius: 15px; display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; box-shadow: 8px 8px 0px var(--dark); }
+        #status { font-size: 1.2rem; font-weight: 900; background: #FFF; color: var(--dark); padding: 10px 25px; border: var(--border-thick); border-radius: 12px; display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; box-shadow: 6px 6px 0px var(--dark); }
         #addModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(62, 39, 35, 0.85); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center;}
-        .modal-content { background: var(--bg-color); padding: 2.5rem; width: 90%; max-width: 450px; transform: rotate(-1deg); overflow-y: auto; max-height: 90vh;}
+        .modal-content { background: var(--bg-color); padding: 2rem; width: 90%; max-width: 400px; transform: rotate(-1deg); }
     </style>
 </head>
 <body>
@@ -107,28 +101,29 @@
     <div class="decor decor-blob"></div>
     <div id="status">系統訊息</div>
 
-    <!-- 首頁區塊 -->
+    <!-- 首頁 -->
     <div id="homePage">
         <h1 class="hero-title">EPIC<br>VOCAB</h1>
-        <div class="hero-subtitle">🚀 視覺衝擊！AI 智能手帳 🚀</div>
-        <button class="brutal-btn" style="font-size: 2rem; padding: 20px 50px;" onclick="switchPage('appPage')">進入單字庫 ➔</button>
+        <div class="hero-subtitle">🚀 視覺衝擊！AI 全能智慧手帳 🚀</div>
+        <button class="brutal-btn" style="font-size: 1.8rem; padding: 18px 45px;" onclick="switchPage('appPage')">進入單字庫 ➔</button>
     </div>
 
-    <!-- 系統主頁 -->
+    <!-- 主頁 -->
     <div id="appPage">
         <div class="app-container">
             <div class="nav-bar" style="max-width: 100%;">
                 <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('homePage')">🏠 首頁</button>
-                <div style="display: flex; gap:10px;">
+                <div style="display: flex; gap:8px; flex-wrap: wrap;">
                     <button class="brutal-btn" style="background: var(--tertiary);" onclick="document.getElementById('addModal').style.display='flex'">➕ 新增</button>
-                    <button class="brutal-btn" style="background: var(--primary);" onclick="startTraining()">🎯 記憶訓練</button>
+                    <button class="brutal-btn" style="background: var(--secondary);" onclick="startQuiz()">📝 AI 測驗</button>
+                    <button class="brutal-btn" style="background: var(--primary);" onclick="startTraining()">🎯 訓練</button>
                 </div>
             </div>
 
-            <div class="brutal-box" style="padding: 2.5rem; margin-bottom: 2rem;">
-                <h2 style="margin-top:0; font-size: 2rem; font-weight: 900;">🤖 呼叫後端 AI</h2>
-                <textarea id="article" rows="2" placeholder="貼上你想學習的英文文獻或句子..."></textarea>
-                <button id="submitBtn" class="brutal-btn" style="width: 100%; font-size: 1.4rem; background: var(--dark); color: #FFF;" onclick="processTextWithAI()">✨ 啟動 AI 智能萃取與分類</button>
+            <div class="brutal-box" style="padding: 2rem; margin-bottom: 1.5rem;">
+                <h2 style="margin-top:0; font-size: 1.6rem; font-weight: 900;">✨ AI 智慧萃取中心</h2>
+                <textarea id="article" rows="2" placeholder="貼上英文文章，AI 將自動生成翻譯、記憶口訣與例句..."></textarea>
+                <button id="submitBtn" class="brutal-btn" style="width: 100%; background: var(--dark); color: #FFF;" onclick="processTextWithAI()">🚀 啟動 AI 深度解析</button>
             </div>
             
             <div class="filter-section">
@@ -142,48 +137,57 @@
                 </div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 20px;">
-                <h2 style="font-size: 2.5rem; margin: 0; font-weight: 900;">📚 我的單字盒</h2>
-                <button class="brutal-btn" style="padding: 10px 20px; font-size: 1.2rem; background: var(--secondary);" onclick="fetchDataFromServer()">🔄 同步雲端</button>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 15px;">
+                <h2 style="font-size: 2rem; margin: 0; font-weight: 900;">📚 我的單字盒</h2>
+                <button class="brutal-btn" style="padding: 8px 16px; font-size: 1rem; background: var(--secondary);" onclick="fetchDataFromServer()">🔄 同步</button>
             </div>
             
             <div id="vocabContainer" class="vocab-grid"></div>
         </div>
     </div>
 
-    <!-- 訓練模式頁面 (💡 已補上「沒記住」與「記住了」雙選項) -->
+    <!-- 訓練模式 (完美置中不跑版) -->
     <div id="trainPage">
         <div class="nav-bar">
-            <button class="brutal-btn" style="background: #FFF; color: var(--dark); padding: 10px 20px; font-size: 1.1rem;" onclick="switchPage('appPage')">🔙 退出</button>
-            <h2 id="trainProgress" style="margin:0; font-size: 1.5rem;">1 / 10</h2>
+            <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('appPage')">🔙 退出</button>
+            <h2 id="trainProgress" style="margin:0; font-size: 1.3rem;">1 / 10</h2>
         </div>
         <div class="train-container">
             <div id="trainCardContainer" style="width: 100%;"></div>
             <div class="train-controls">
-                <button class="brutal-btn" style="flex: 1; background: #FFF; color: var(--dark); padding: 12px; font-size: 1.2rem;" onclick="prevCard()">⬅️ 上一個</button>
-                <button class="brutal-btn" style="flex: 1; background: var(--secondary); color: var(--dark); padding: 12px; font-size: 1.2rem;" onclick="nextCard()">下一個 ➡️</button>
+                <button class="brutal-btn" style="flex: 1; background: #FFF; color: var(--dark);" onclick="prevCard()">⬅️ 上一個</button>
+                <button class="brutal-btn" style="flex: 1; background: var(--secondary);" onclick="nextCard()">下一個 ➡️</button>
             </div>
         </div>
     </div>
 
-    <!-- 手動新增單字 Modal -->
+    <!-- AI 測驗模式頁面 -->
+    <div id="quizPage">
+        <div class="nav-bar">
+            <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('appPage')">🔙 退出測驗</button>
+            <h2 style="margin:0; font-size: 1.3rem;">📝 AI 智慧隨堂考</h2>
+        </div>
+        <div class="train-container" id="quizContainer"></div>
+    </div>
+
+    <!-- 新增 Modal -->
     <div id="addModal">
         <div class="brutal-box modal-content">
-            <h2 style="margin-top:0; font-size: 2.5rem;">➕ 手動新增</h2>
+            <h2 style="margin-top:0; font-size: 2rem;">➕ 手動新增</h2>
             <input type="text" id="m-word" placeholder="單字 (必填)">
             <input type="text" id="m-category" placeholder="類別 (例: 專案開發)">
             <input type="text" id="m-pos" placeholder="詞性">
             <input type="text" id="m-phonetic" placeholder="IPA 音標">
             <input type="text" id="m-trans" placeholder="中文翻譯 (必填)">
-            <div style="display:flex; gap:15px; margin-top:15px;">
+            <div style="display:flex; gap:10px; margin-top:15px;">
                 <button class="brutal-btn" style="background:#FFF; color:var(--dark); flex:1;" onclick="document.getElementById('addModal').style.display='none'">取消</button>
-                <button class="brutal-btn" style="flex:1;" onclick="manualAddWord()">確認新增</button>
+                <button class="brutal-btn" style="flex:1;" onclick="manualAddWord()">確定</button>
             </div>
         </div>
     </div>
 
     <script>
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請確保填入你的網址
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; // ⚠️ 請填入你的網址
         
         let vocabCache = []; 
         let currentCategory = '全部'; 
@@ -195,6 +199,7 @@
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('appPage').style.display = 'none';
             document.getElementById('trainPage').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'none';
             document.getElementById(pageId).style.display = 'flex';
             if(pageId === 'appPage' && vocabCache.length === 0) fetchDataFromServer();
             window.scrollTo(0, 0);
@@ -221,7 +226,7 @@
             const btn = document.getElementById('submitBtn');
             if (!text.trim()) return showMsg("⚠️ 請先貼上英文文章！");
 
-            btn.disabled = true; btn.innerText = "✨ 後端 AI 正在努力分析中..."; showMsg("⏳ 呼叫遠端 AI 伺服器...");
+            btn.disabled = true; btn.innerText = "✨ AI 正在生成口訣與例句..."; showMsg("⏳ 呼叫 Gemini 中...");
 
             try {
                 const response = await fetch(GAS_URL, {
@@ -231,22 +236,79 @@
                 });
 
                 const result = await response.json();
-                
                 if (result.status === 'success') {
-                    showMsg(`✅ 成功建立 ${result.count} 張卡片！`);
+                    showMsg(`✅ 成功建立 ${result.count} 張 AI 卡片！`);
                     document.getElementById('article').value = '';
                     fetchDataFromServer(); 
-                } else {
-                    throw new Error(result.message);
-                }
-            } catch (err) { 
-                console.error(err);
-                showMsg("❌ 解析失敗：" + err.message); 
-            } finally { 
-                btn.disabled = false; btn.innerText = "✨ 啟動 AI 智能萃取與分類"; 
-            }
+                } else { throw new Error(result.message); }
+            } catch (err) { showMsg("❌ 解析失敗：" + err.message); }
+            finally { btn.disabled = false; btn.innerText = "🚀 啟動 AI 深度解析"; }
         }
 
+        // --- 📝 AI 測驗中心 ---
+        async function startQuiz() {
+            if(vocabCache.length === 0) return alert("單字盒是空的，請先新增單字！");
+            showMsg("⏳ AI 正在為你出題...");
+            
+            const randomWords = vocabCache.map(w => w.word).sort(() => 0.5 - Math.random()).slice(0, 5);
+
+            try {
+                const res = await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'ai_quiz', words: randomWords }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                const result = await res.json();
+                if(result.status === 'success' && result.quiz) {
+                    renderQuiz(result.quiz);
+                    switchPage('quizPage');
+                } else { throw new Error(); }
+            } catch(e) { showMsg("❌ 出題失敗，請重試"); }
+        }
+
+        function renderQuiz(quizList) {
+            const container = document.getElementById('quizContainer');
+            let currentQ = 0;
+
+            function showQuestion() {
+                if(currentQ >= quizList.length) {
+                    container.innerHTML = `
+                        <div class="brutal-box train-card" style="text-align:center;">
+                            <h2>🎉 測驗完成！</h2>
+                            <p style="font-size: 1.5rem;">你太棒了，成功通過 AI 隨堂考！</p>
+                            <button class="brutal-btn" style="background:var(--success); color:#FFF; margin-top:20px;" onclick="switchPage('appPage')">返回單字庫</button>
+                        </div>`;
+                    return;
+                }
+                const q = quizList[currentQ];
+                container.innerHTML = `
+                    <div class="brutal-box train-card">
+                        <h3>問題 ${currentQ + 1} / ${quizList.length}</h3>
+                        <p style="font-size: 1.3rem; font-weight:900; margin:15px 0;">${q.question}</p>
+                        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+                            ${q.options.map(opt => `
+                                <button class="brutal-btn" style="background:#FFF; color:var(--dark); text-align:left; font-size:1.1rem;" onclick="checkAnswer(this, '${opt}', '${q.answer}')">${opt}</button>
+                            `).join('')}
+                        </div>
+                    </div>`;
+            }
+
+            window.checkAnswer = function(btn, selected, correct) {
+                if(selected === correct) {
+                    btn.style.background = 'var(--success)';
+                    btn.style.color = '#FFF';
+                    showMsg("✅ 答對了！");
+                    setTimeout(() => { currentQ++; showQuestion(); }, 1200);
+                } else {
+                    btn.style.background = 'var(--primary)';
+                    btn.style.color = '#FFF';
+                    showMsg("❌ 答錯囉，正確答案是：" + correct);
+                }
+            };
+            showQuestion();
+        }
+
+        // --- 介面過濾與渲染 ---
         function setCategory(cat) { currentCategory = cat; renderCards(); }
         function setStatusFilter(status) {
             currentStatus = status;
@@ -300,12 +362,13 @@
                                 <h3 class="word-title">${item.word}</h3>
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="phonetic">${item.phonetic}</div>
-                                <div class="flip-hint">👉 點擊翻面</div>
+                                <div style="font-size:0.85rem; color:#666; margin-top:8px;">💡 ${item.mnemonic || '無口訣'}</div>
+                                <div class="flip-hint" style="font-size:0.8rem; color:#aaa; margin-top:5px;">👉 點擊翻面</div>
                             </div>
                             <div class="flip-back">
                                 <div class="cat-badge">${item.category}</div>
                                 <div class="translation-huge">${item.translation}</div>
-                                <div class="flip-hint">👉 點擊翻回</div>
+                                <div class="ai-note"><strong>📖 例句：</strong><br>${item.example || '無'}</div>
                             </div>
                         </div>
                     </div>
@@ -321,7 +384,7 @@
             `}).join('');
         }
 
-        // --- 🎯 訓練模式 (新增「沒記住/待加強」與「記住了」選項) ---
+        // --- 🎯 訓練模式 (完美置中) ---
         function startTraining() {
             trainQueue = getFilteredData().filter(w => w.status === '學習中');
             if(trainQueue.length === 0) return alert("目前的條件下沒有「學習中」的單字需要訓練。");
@@ -342,18 +405,19 @@
                         <div class="flip-inner">
                             <div class="flip-front">
                                 <h3 class="word-title" style="text-align: center;">${item.word}</h3>
-                                <div class="phonetic" style="font-size: 1.8rem;">${item.phonetic}</div>
-                                <div class="flip-hint">👉 點擊翻看答案</div>
+                                <div class="phonetic" style="font-size: 1.5rem;">${item.phonetic}</div>
+                                <div style="font-size:0.9rem; color:#555; margin-top:10px;">💡 ${item.mnemonic || ''}</div>
+                                <div style="font-size:0.8rem; color:#aaa; margin-top:5px;">👉 點擊翻看答案</div>
                             </div>
                             <div class="flip-back">
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="translation-huge" style="text-align: center;">${item.translation}</div>
+                                <div class="ai-note" style="margin-top:10px;"><strong>📖 例句：</strong><br>${item.example || ''}</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 💡 訓練中的互動按鈕：聽發音 + 沒記住 + 記住了 -->
-                    <div class="card-actions" style="margin-top: 20px;">
+                    <div class="card-actions" style="margin-top: 15px;">
                         <button class="btn-act" style="background:var(--tertiary);" onclick="speakWord(event, '${item.word}')">🔊 唸</button>
                         <button class="btn-act" style="background:#FF595E; color:white;" onclick="trainSetStatus(event, '${item.word}', '學習中')">❌ 沒記住</button>
                         <button class="btn-act" style="background:var(--success); color:white;" onclick="trainSetStatus(event, '${item.word}', '已記住')">✅ 記住了</button>
@@ -372,8 +436,8 @@
                 });
                 const idx = vocabCache.findIndex(w => w.word === word);
                 if(idx !== -1) vocabCache[idx].status = newStatus;
-                showMsg(`✅ 已更新為: ${newStatus}`);
-                nextCard(); // 自動跳下一張
+                showMsg(`✅ 已更新`);
+                nextCard();
             } catch (err) { showMsg("❌ 更新失敗"); }
         }
 
@@ -400,26 +464,6 @@
             } catch (err) { container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; color:red;">讀取失敗 💀</h2>'; }
         }
 
-        async function fetchDictFrontend(rawWord) {
-            let w = rawWord.toLowerCase().trim();
-            let pos = "Unknown", ipa = "無音標";
-            try {
-                let res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${w}`);
-                if (res.ok) {
-                    let data = (await res.json())[0];
-                    if (data.meanings && data.meanings[0]) pos = data.meanings[0].partOfSpeech;
-                    if (data.phonetic) ipa = data.phonetic;
-                    else if (data.phonetics) {
-                        let p = data.phonetics.find(x => x.text);
-                        if (p) ipa = p.text;
-                    }
-                }
-            } catch(e) {}
-            if (ipa && ipa !== "無音標") ipa = `/${ipa.replace(/\//g, '')}/`;
-            if (pos !== "Unknown") pos = pos.charAt(0).toUpperCase() + pos.slice(1);
-            return { word: w, pos: pos, phonetic: ipa };
-        }
-
         async function manualAddWord() {
             const rawWord = document.getElementById('m-word').value;
             const trans = document.getElementById('m-trans').value;
@@ -428,14 +472,11 @@
             showMsg("⏳ 寫入中...");
             document.getElementById('addModal').style.display = 'none';
 
-            const dictResult = await fetchDictFrontend(rawWord);
             const payload = {
-                action: 'add',
-                word: rawWord,
-                pos: document.getElementById('m-pos').value || dictResult.pos,
-                phonetic: document.getElementById('m-phonetic').value || dictResult.phonetic,
-                translation: trans,
-                category: document.getElementById('m-category').value || "自訂單字"
+                action: 'add', word: rawWord,
+                pos: document.getElementById('m-pos').value || 'Unknown',
+                phonetic: document.getElementById('m-phonetic').value || '無音標',
+                translation: trans, category: document.getElementById('m-category').value || '自訂單字'
             };
 
             try {
@@ -443,7 +484,7 @@
                     method: 'POST', body: JSON.stringify(payload),
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
-                showMsg(`✅ 已新增 ${rawWord}`);
+                showMsg(`✅ 已新增`);
                 document.querySelectorAll('#addModal input').forEach(inp => inp.value = '');
                 fetchDataFromServer();
             } catch (err) { showMsg("❌ 新增失敗"); }
@@ -453,7 +494,7 @@
             event.stopPropagation();
             showMsg("⏳ 更新中...");
             try {
-                await fetch(NL = GAS_URL, {
+                await fetch(GAS_URL, {
                     method: 'POST', body: JSON.stringify({ action: 'update_status', word: word, newStatus: newStatus }),
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
@@ -466,8 +507,8 @@
 
         async function deleteWord(event, word) {
             event.stopPropagation(); 
-            if(!confirm(`確定要刪除「${word}」嗎?`)) return;
-            showMsg(`⏳ 刪除中...`);
+            if(!confirm(`確定要刪除「${word}」嗎？`)) return;
+            showMsg("⏳ 刪除中...");
             try {
                 await fetch(GAS_URL, {
                     method: 'POST', body: JSON.stringify({ action: 'delete', word: word }),
