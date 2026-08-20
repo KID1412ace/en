@@ -3,29 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 EPIC VOCAB | 記憶訓練手帳</title>
+    <title>🔥 EPIC VOCAB | AI 智能翻轉手帳</title>
+    
+    <!-- 引入 Google Fonts 確保字體不跑版 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
     <style>
         /* --- 溫暖粗獷調色盤 --- */
         :root {
             --bg-color: #FFF3E0; --primary: #FF6B6B; --secondary: #FCA311;  
             --tertiary: #4ECDC4; --dark: #3E2723; --border-thick: 6px solid var(--dark);
             --box-shadow-huge: 10px 10px 0px var(--dark); --box-shadow-hover: 16px 16px 0px var(--dark);
-            --success: #06D6A0; /* 記住了的綠色 */
+            --success: #06D6A0;
         }
         
-        body, html { margin: 0; padding: 0; width: 100%; min-height: 100%; font-family: 'Nunito', 'Arial Black', Impact, sans-serif; background-color: var(--bg-color); color: var(--dark); overflow-x: hidden; scroll-behavior: smooth; background-image: radial-gradient(rgba(62, 39, 35, 0.1) 3px, transparent 3px); background-size: 35px 35px; }
+        body, html { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%; 
+            font-family: 'Nunito', 'Arial Black', Impact, sans-serif; 
+            background-color: var(--bg-color); color: var(--dark); 
+            overflow-x: hidden; scroll-behavior: smooth; 
+            background-image: radial-gradient(rgba(62, 39, 35, 0.1) 3px, transparent 3px); 
+            background-size: 35px 35px; 
+        }
         
+        /* 動態背景裝飾 */
         .decor { position: fixed; z-index: 0; pointer-events: none; border: var(--border-thick); box-shadow: 6px 6px 0px var(--dark); }
         .decor-star { width: 150px; height: 150px; background: var(--secondary); top: 5%; left: -50px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: spin 25s linear infinite;}
         .decor-blob { width: 200px; height: 200px; background: var(--tertiary); bottom: 10%; right: -80px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; animation: morphBlob 10s alternate infinite ease-in-out;}
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes morphBlob { 0% { transform: scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 100% { transform: scale(1.1) rotate(20deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
 
+        /* UI 元件 */
         .brutal-box { background: #FFF; border: var(--border-thick); border-radius: 20px; box-shadow: var(--box-shadow-huge); position: relative; z-index: 10; transition: all 0.2s; }
-        .brutal-btn { background: var(--primary); color: #FFF; border: var(--border-thick); padding: 15px 30px; font-size: 1.4rem; font-family: inherit; font-weight: 900; border-radius: 15px; box-shadow: 6px 6px 0px var(--dark); cursor: pointer; transition: 0.1s; text-transform: uppercase; }
+        .brutal-btn { background: var(--primary); color: #FFF; border: var(--border-thick); padding: 15px 30px; font-size: 1.4rem; font-family: 'Nunito', sans-serif; font-weight: 900; border-radius: 15px; box-shadow: 6px 6px 0px var(--dark); cursor: pointer; transition: 0.1s; text-transform: uppercase; }
         .brutal-btn:hover { transform: translate(-3px, -3px); box-shadow: var(--box-shadow-hover); background: var(--secondary); color: var(--dark); }
         .brutal-btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0px var(--dark); }
+        .brutal-btn:disabled { filter: grayscale(80%); cursor: not-allowed; transform: none; box-shadow: 6px 6px 0px var(--dark); }
 
+        /* 版面配置 */
         #homePage, #appPage, #trainPage { min-height: 100vh; padding: 3rem 1.5rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10;}
         #appPage, #trainPage { display: none; justify-content: flex-start; padding-top: 1.5rem;}
         
@@ -34,9 +51,11 @@
         
         .hero-title { font-size: 8rem; font-weight: 900; line-height: 0.9; color: var(--bg-color); text-shadow: 6px 6px 0px var(--dark), -3px -3px 0px var(--primary); margin: 0; text-align: center; transform: rotate(-3deg); -webkit-text-stroke: 3px var(--dark);}
         
-        textarea, .brutal-input { width: 100%; padding: 20px; margin-bottom: 15px; border: var(--border-thick); border-radius: 16px; font-size: 1.5rem; font-weight: bold; color: var(--dark); box-shadow: inset 6px 6px 0px rgba(62, 39, 35, 0.08); box-sizing: border-box; background: #FFF; font-family: inherit;}
-        
-        /* 標籤列 (類別與狀態) */
+        textarea, .brutal-input { width: 100%; padding: 20px; margin-bottom: 15px; border: var(--border-thick); border-radius: 16px; font-size: 1.5rem; font-weight: 900; color: var(--dark); box-shadow: inset 6px 6px 0px rgba(62, 39, 35, 0.08); box-sizing: border-box; background: #FFF; font-family: 'Nunito', sans-serif;}
+        textarea { resize: vertical; }
+        textarea:focus, .brutal-input:focus { outline: none; background: #FFFCF2; border-color: var(--secondary); }
+
+        /* 分類標籤列 */
         .filter-section { margin-bottom: 25px; }
         .filter-title { font-size: 1.2rem; font-weight: 900; margin-bottom: 10px; color: var(--dark); }
         .filter-bar { display: flex; gap: 10px; overflow-x: auto; padding: 5px; scrollbar-width: none; margin-bottom: 15px;}
@@ -45,13 +64,15 @@
         .filter-btn:hover { transform: translateY(-2px); box-shadow: 5px 5px 0px var(--dark); background: var(--secondary);}
         .filter-btn.active { background: var(--dark); color: #FFF; transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
 
-        /* 網格卡片 */
+        /* 卡片與 3D 翻轉設計 */
         .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 3rem; padding-bottom: 5rem;}
         .vocab-card { padding: 2.5rem 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; background: #FFF; transform: rotate(-1deg); }
-        .vocab-card.learned { border-color: var(--success); opacity: 0.8;} /* 已記住的樣式 */
+        .vocab-card.learned { border-color: var(--success); opacity: 0.85;}
+        .vocab-card:nth-child(even) { transform: rotate(1deg); }
+        .vocab-card:hover { transform: scale(1.03) rotate(0deg) translateY(-5px); box-shadow: var(--box-shadow-hover); z-index: 20;}
         .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 120px; height: 35px; background: rgba(255, 107, 107, 0.9); border: 4px solid var(--dark); z-index: 2;}
+        .vocab-card:nth-child(even) .tape { background: rgba(78, 205, 196, 0.9); transform: translateX(-50%) rotate(3deg); }
 
-        /* 3D 翻牌核心 */
         .flip-container { perspective: 1000px; flex-grow: 1; cursor: pointer; min-height: 200px; margin-top: 5px; }
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-container.is-flipped .flip-inner { transform: rotateY(180deg); }
@@ -62,22 +83,24 @@
         .status-badge { position: absolute; top: -20px; right: -15px; background: var(--primary); color: #FFF; border: 3px solid var(--dark); padding: 5px 12px; font-weight: 900; border-radius: 20px; transform: rotate(10deg); box-shadow: 3px 3px 0px var(--dark); z-index: 5;}
         .status-badge.learned { background: var(--success); }
         
-        .word-title { font-size: 2.5rem; font-weight: 900; margin: 0 0 10px 0; color: var(--dark); text-transform: lowercase;}
+        /* 確保字體大小寫依照輸入真實呈現，不強制大寫 */
+        .word-title { font-size: 2.5rem; font-weight: 900; margin: 0 0 10px 0; color: var(--dark); }
         .pos-badge { font-size: 1.1rem; font-weight: bold; padding: 4px 15px; border: 3px solid var(--dark); border-radius: 10px; background: var(--secondary); box-shadow: 3px 3px 0px var(--dark); display: inline-block; margin-bottom: 15px;}
-        .phonetic { font-size: 1.4rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 6px 12px; border-radius: 8px; display: inline-block;}
+        .phonetic { font-size: 1.4rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 6px 12px; border-radius: 8px; display: inline-block; transform: skewX(-6deg);}
         .translation-huge { font-size: 2.2rem; font-weight: 900; color: var(--primary); border-bottom: 5px dashed var(--dark); padding-bottom: 10px;}
+        .flip-hint { font-size: 0.9rem; font-weight: 900; color: #AAA; margin-top: 15px; animation: bounceHint 1.5s infinite; }
+        @keyframes bounceHint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
         
         .card-actions { display: flex; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 3px dashed rgba(0,0,0,0.1); }
-        .btn-act { flex: 1; background: var(--bg-color); color: var(--dark); border: 3px solid var(--dark); border-radius: 10px; font-size: 1.1rem; font-weight: 900; cursor: pointer; padding: 10px; box-shadow: 4px 4px 0px var(--dark); transition: 0.1s;}
+        .btn-act { flex: 1; background: var(--bg-color); color: var(--dark); border: 3px solid var(--dark); border-radius: 10px; font-size: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; padding: 10px; box-shadow: 4px 4px 0px var(--dark); transition: 0.1s;}
         .btn-act:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px var(--dark); }
         
-        /* --- 訓練模式專屬樣式 --- */
+        /* 訓練模式 UI */
         .train-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;}
         .train-card { width: 100%; min-height: 350px; padding: 3rem 2rem; }
         .train-card .word-title { font-size: 4rem; margin-bottom: 20px;}
         .train-card .translation-huge { font-size: 3.5rem; }
         .train-controls { display: flex; width: 100%; gap: 15px; margin-top: 30px; justify-content: space-between;}
-        .train-btn { flex: 1; padding: 20px; font-size: 1.5rem; }
         
         #status { font-size: 1.4rem; font-weight: 900; background: #FFF; color: var(--dark); padding: 12px 30px; border: var(--border-thick); border-radius: 15px; display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; box-shadow: 8px 8px 0px var(--dark); }
         #addModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(62, 39, 35, 0.85); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center;}
@@ -86,33 +109,34 @@
 </head>
 <body>
 
+    <!-- 背景裝飾 -->
     <div class="decor decor-star"></div>
     <div class="decor decor-blob"></div>
     <div id="status">系統訊息</div>
 
-    <!-- 首頁 -->
+    <!-- 首頁區塊 -->
     <div id="homePage">
         <h1 class="hero-title">EPIC<br>VOCAB</h1>
-        <div class="hero-subtitle">🚀 視覺衝擊！記憶訓練手帳 🚀</div>
+        <div class="hero-subtitle">🚀 視覺衝擊！AI 智能手帳 🚀</div>
         <button class="brutal-btn" style="font-size: 2rem; padding: 20px 50px;" onclick="switchPage('appPage')">進入單字庫 ➔</button>
     </div>
 
-    <!-- 系統頁面 (瀏覽模式) -->
+    <!-- 系統主頁 (單字網格) -->
     <div id="appPage">
         <div class="app-container">
             <div class="nav-bar">
                 <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('homePage')">🏠 首頁</button>
                 <div style="display: flex; gap:10px;">
                     <button class="brutal-btn" style="background: var(--tertiary);" onclick="document.getElementById('addModal').style.display='flex'">➕ 新增</button>
-                    <!-- 進入訓練模式按鈕 -->
-                    <button class="brutal-btn" style="background: var(--primary);" onclick="startTraining()">🎯 開始訓練</button>
+                    <button class="brutal-btn" style="background: var(--primary);" onclick="startTraining()">🎯 記憶訓練</button>
                 </div>
             </div>
 
+            <!-- 後端 AI 解析區塊 (已移除前端 API Key 漏洞) -->
             <div class="brutal-box" style="padding: 2.5rem; margin-bottom: 2rem;">
-                <h2 style="margin-top:0; font-size: 2rem; font-weight: 900;">🔥 丟入文章</h2>
-                <textarea id="article" rows="2" placeholder="貼上英文文獻，自動萃取..."></textarea>
-                <button id="submitBtn" class="brutal-btn" style="width: 100%; font-size: 1.4rem;" onclick="processText()">自動萃取 & 智慧分類</button>
+                <h2 style="margin-top:0; font-size: 2rem; font-weight: 900;">🤖 呼叫後端 AI</h2>
+                <textarea id="article" rows="2" placeholder="貼上你想學習的英文文獻或句子..."></textarea>
+                <button id="submitBtn" class="brutal-btn" style="width: 100%; font-size: 1.4rem; background: var(--dark); color: #FFF;" onclick="processTextWithAI()">✨ 啟動 AI 智能萃取與分類</button>
             </div>
             
             <div class="filter-section">
@@ -128,37 +152,34 @@
 
             <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 20px;">
                 <h2 style="font-size: 2.5rem; margin: 0; font-weight: 900;">📚 我的單字盒</h2>
-                <button class="brutal-btn" style="padding: 10px 20px; font-size: 1.2rem; background: var(--secondary);" onclick="fetchDataFromServer()">🔄 雲端同步</button>
+                <button class="brutal-btn" style="padding: 10px 20px; font-size: 1.2rem; background: var(--secondary);" onclick="fetchDataFromServer()">🔄 同步雲端</button>
             </div>
             
             <div id="vocabContainer" class="vocab-grid"></div>
         </div>
     </div>
 
-    <!-- 訓練模式頁面 (焦點模式) -->
+    <!-- 訓練模式頁面 -->
     <div id="trainPage">
         <div class="nav-bar" style="width: 100%; max-width: 600px;">
             <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('appPage')">🔙 退出訓練</button>
             <h2 id="trainProgress" style="margin:0;">1 / 10</h2>
         </div>
-        
         <div class="train-container">
-            <!-- 訓練卡片容器 -->
             <div id="trainCardContainer" style="width: 100%;"></div>
-            
-            <!-- 控制按鈕 -->
             <div class="train-controls">
-                <button class="brutal-btn train-btn" style="background: #FFF; color: var(--dark);" onclick="prevCard()">⬅️ 上一個</button>
-                <button class="brutal-btn train-btn" style="background: var(--primary);" onclick="nextCard()">下一個 ➡️</button>
+                <button class="brutal-btn" style="flex: 1; background: #FFF; color: var(--dark);" onclick="prevCard()">⬅️ 上一個</button>
+                <button class="brutal-btn" style="flex: 1; background: var(--primary);" onclick="nextCard()">下一個 ➡️</button>
             </div>
         </div>
     </div>
 
-    <!-- 新增 Modal -->
+    <!-- 手動新增單字 Modal -->
     <div id="addModal">
         <div class="brutal-box modal-content">
             <h2 style="margin-top:0; font-size: 2.5rem;">➕ 手動新增</h2>
             <input type="text" id="m-word" placeholder="單字 (必填)">
+            <input type="text" id="m-category" placeholder="類別 (例: 專案開發)">
             <input type="text" id="m-pos" placeholder="詞性">
             <input type="text" id="m-phonetic" placeholder="IPA 音標">
             <input type="text" id="m-trans" placeholder="中文翻譯 (必填)">
@@ -170,14 +191,12 @@
     </div>
 
     <script>
-        // ⚠️ 記得貼上你剛剛發布的 7 欄位版 GAS API 網址
+        // ⚠️ 必填：替換為你 Google Apps Script 部署的網址 (確保有 ai_extract 功能的版本)
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; 
         
         let vocabCache = []; 
         let currentCategory = '全部'; 
-        let currentStatus = '全部'; // 狀態過濾
-
-        // 訓練模式專用變數
+        let currentStatus = '全部'; 
         let trainQueue = []; 
         let trainIndex = 0;
 
@@ -206,22 +225,41 @@
             }
         }
 
-        // --- 🤖 專業分類引擎 ---
-        function autoCategorize(word, pos) {
-            const w = word.toLowerCase();
-            const qaKeywords = ['quality', 'testing', 'vulnerability', 'injection', 'security', 'bug'];
-            const prodKeywords = ['production', 'smart', 'factory', 'sensor', 'robotics', 'optimization'];
-            const webKeywords = ['frontend', 'backend', 'api', 'database', 'server'];
+        // --- 🛡️ 安全版 AI 智能萃取引擎 (交給後端處理) ---
+        async function processTextWithAI() {
+            const text = document.getElementById('article').value;
+            const btn = document.getElementById('submitBtn');
+            if (!text.trim()) return showMsg("⚠️ 請先貼上英文文章！");
 
-            if (qaKeywords.some(k => w.includes(k))) return "軟體品管";
-            if (prodKeywords.some(k => w.includes(k))) return "智慧生產";
-            if (webKeywords.some(k => w.includes(k))) return "網頁開發";
+            btn.disabled = true; btn.innerText = "✨ 後端 AI 正在努力分析中..."; showMsg("⏳ 呼叫遠端 AI 伺服器...");
 
-            if (pos === "Verb") return "動詞大補帖";
-            return "生活與綜合";
+            try {
+                // 將資料發送給後端 GAS，後端會使用寫死的 API Key 向 Gemini 請求，徹底防護資安
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'ai_extract', text: text }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showMsg(`✅ 成功建立 ${result.count} 張卡片！`);
+                    document.getElementById('article').value = '';
+                    fetchDataFromServer(); 
+                } else {
+                    throw new Error(result.message);
+                }
+
+            } catch (err) { 
+                console.error(err);
+                showMsg("❌ 解析失敗，請檢查網路或確認後端版本是否更新"); 
+            } finally { 
+                btn.disabled = false; btn.innerText = "✨ 啟動 AI 智能萃取與分類"; 
+            }
         }
 
-        // --- 瀏覽模式：渲染與過濾 ---
+        // --- UI 過濾與渲染 ---
         function setCategory(cat) { currentCategory = cat; renderCards(); }
         function setStatusFilter(status) {
             currentStatus = status;
@@ -246,11 +284,10 @@
             
             if (vocabCache.length === 0) {
                 catBar.innerHTML = '';
-                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">空空如也，快去塞字進來！</h2>';
+                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">空空如也，快請 AI 幫忙吧！</h2>';
                 return;
             }
 
-            // 渲染類別標籤
             const categories = ['全部', ...new Set(vocabCache.map(item => item.category))];
             catBar.innerHTML = categories.map(cat => `
                 <button class="filter-btn ${cat === currentCategory ? 'active' : ''}" onclick="setCategory('${cat}')">${cat}</button>
@@ -276,18 +313,20 @@
                                 <h3 class="word-title">${item.word}</h3>
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="phonetic">${item.phonetic}</div>
+                                <div class="flip-hint">👉 點擊翻面</div>
                             </div>
                             <div class="flip-back">
                                 <div class="cat-badge">${item.category}</div>
                                 <div class="translation-huge">${item.translation}</div>
+                                <div class="flip-hint">👉 點擊翻回</div>
                             </div>
                         </div>
                     </div>
                     <div class="card-actions">
                         <button class="btn-act" onclick="speakWord(event, '${item.word}')">🔊 唸</button>
                         ${isLearned 
-                            ? `<button class="btn-act" style="background:var(--secondary);" onclick="updateStatus(event, '${item.word}', '學習中')">🔄 忘記了</button>`
-                            : `<button class="btn-act" style="background:var(--success); color:white;" onclick="updateStatus(event, '${item.word}', '已記住')">✅ 記住了</button>`
+                            ? `<button class="btn-act" style="background:var(--secondary);" onclick="updateStatus(event, '${item.word}', '學習中')">🔄 忘記</button>`
+                            : `<button class="btn-act" style="background:var(--success); color:white;" onclick="updateStatus(event, '${item.word}', '已記住')">✅ 記住</button>`
                         }
                         <button class="btn-act" style="background:#FF595E; color:white;" onclick="deleteWord(event, '${item.word}')">✕ 刪</button>
                     </div>
@@ -295,17 +334,12 @@
             `}).join('');
         }
 
-        // --- 🚀 焦點訓練模式 (Focus Mode) ---
+        // --- 訓練模式功能 ---
         function startTraining() {
-            // 只挑選出當前過濾條件下的「學習中」單字來訓練
             trainQueue = getFilteredData().filter(w => w.status === '學習中');
+            if(trainQueue.length === 0) return alert("目前的條件下沒有需要訓練的單字。");
             
-            if(trainQueue.length === 0) {
-                alert("你太棒了！目前的條件下沒有「學習中」的單字需要訓練。");
-                return;
-            }
-            
-            // 打亂陣列 (隨機排序)
+            // 洗牌
             trainQueue = trainQueue.sort(() => Math.random() - 0.5);
             trainIndex = 0;
             switchPage('trainPage');
@@ -321,13 +355,13 @@
                     <div class="flip-container" onclick="this.classList.toggle('is-flipped')" style="min-height: 250px;">
                         <div class="flip-inner">
                             <div class="flip-front">
-                                <h3 class="word-title">${item.word}</h3>
+                                <h3 class="word-title" style="text-align: center;">${item.word}</h3>
                                 <div class="phonetic" style="font-size: 2rem;">${item.phonetic}</div>
-                                <div style="margin-top:20px; font-weight:bold; color:#888;">👉 點擊翻看答案</div>
+                                <div class="flip-hint">👉 點擊翻看答案</div>
                             </div>
                             <div class="flip-back">
                                 <span class="pos-badge">${item.pos}</span>
-                                <div class="translation-huge">${item.translation}</div>
+                                <div class="translation-huge" style="text-align: center;">${item.translation}</div>
                             </div>
                         </div>
                     </div>
@@ -340,42 +374,16 @@
         }
 
         function nextCard() {
-            if (trainIndex < trainQueue.length - 1) {
-                trainIndex++;
-                renderTrainCard();
-            } else {
-                alert("🎉 恭喜！這組訓練完成！");
-                switchPage('appPage');
-            }
+            if (trainIndex < trainQueue.length - 1) { trainIndex++; renderTrainCard(); } 
+            else { alert("🎉 恭喜！這組訓練完成！"); switchPage('appPage'); }
         }
 
         function prevCard() {
-            if (trainIndex > 0) {
-                trainIndex--;
-                renderTrainCard();
-            } else {
-                showMsg("已經是第一張囉！");
-            }
+            if (trainIndex > 0) { trainIndex--; renderTrainCard(); } 
+            else { showMsg("已經是第一張囉！"); }
         }
 
-        async function markAsLearnedInTrain(event, word) {
-            event.stopPropagation();
-            showMsg("⏳ 記錄中...");
-            try {
-                await fetch(GAS_URL, {
-                    method: 'POST', body: JSON.stringify({ action: 'update_status', word: word, newStatus: '已記住' }),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-                });
-                showMsg(`✅ 已標記為記住了`);
-                // 更新快取
-                const idx = vocabCache.findIndex(w => w.word === word);
-                if(idx !== -1) vocabCache[idx].status = '已記住';
-                // 訓練中自動跳下一張
-                nextCard();
-            } catch (err) { showMsg("❌ 更新失敗"); }
-        }
-
-        // --- 資料庫互動邏輯 ---
+        // --- 資料庫互動功能 ---
         async function fetchDataFromServer() {
             const container = document.getElementById('vocabContainer');
             container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">雲端同步中... ☁️</h2>';
@@ -389,23 +397,7 @@
             } catch (err) { container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; color:red;">讀取失敗 💀</h2>'; }
         }
 
-        // 獨立更新狀態按鈕 (在瀏覽模式中使用)
-        async function updateStatus(event, word, newStatus) {
-            event.stopPropagation();
-            showMsg("⏳ 更新中...");
-            try {
-                await fetch(GAS_URL, {
-                    method: 'POST', body: JSON.stringify({ action: 'update_status', word: word, newStatus: newStatus }),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-                });
-                showMsg(`✅ 狀態已更新`);
-                // 更新本機快取以加速渲染
-                const idx = vocabCache.findIndex(w => w.word === word);
-                if(idx !== -1) vocabCache[idx].status = newStatus;
-                renderCards();
-            } catch (err) { showMsg("❌ 更新失敗"); }
-        }
-
+        // 供前端手動新增使用的備用 API
         async function fetchDictFrontend(rawWord) {
             let w = rawWord.toLowerCase().trim();
             let pos = "Unknown", ipa = "無音標";
@@ -426,58 +418,65 @@
             return { word: w, pos: pos, phonetic: ipa };
         }
 
-        async function processText() {
-            const text = document.getElementById('article').value;
-            const btn = document.getElementById('submitBtn');
-            if (!text.trim()) return showMsg("⚠️ 內容不能為空！");
-
-            btn.disabled = true; btn.innerText = "🔍 智能萃取中..."; showMsg("⏳ 正在分析單字與詞性...");
-            
-            const wordsArray = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
-            const uniqueWords = [...new Set(wordsArray)];
-            if (uniqueWords.length === 0) { btn.disabled = false; btn.innerText = "自動萃取 & 智慧分類"; return showMsg("⚠️ 無有效單字"); }
-
-            const enrichedWords = await Promise.all(uniqueWords.map(async w => {
-                const data = await fetchDictFrontend(w);
-                data.category = autoCategorize(data.word, data.pos);
-                return data;
-            }));
-
-            try {
-                await fetch(GAS_URL, {
-                    method: 'POST', body: JSON.stringify({ action: 'save_words', words: enrichedWords }),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-                });
-                showMsg(`✅ 成功建立 ${enrichedWords.length} 張卡片！`);
-                document.getElementById('article').value = '';
-                fetchDataFromServer();
-            } catch (err) { showMsg("❌ 伺服器連線失敗"); }
-            finally { btn.disabled = false; btn.innerText = "自動萃取 & 智慧分類"; }
-        }
-
         async function manualAddWord() {
             const rawWord = document.getElementById('m-word').value;
-            if(!rawWord) return alert("單字為必填欄位！");
+            const trans = document.getElementById('m-trans').value;
+            if(!rawWord || !trans) return alert("單字與翻譯為必填欄位！");
             
             showMsg("⏳ 寫入中...");
             document.getElementById('addModal').style.display = 'none';
 
+            // 手動新增依然利用備用前端 API 輔助抓音標詞性
             const dictResult = await fetchDictFrontend(rawWord);
-            dictResult.category = "自訂單字";
-            dictResult.pos = document.getElementById('m-pos').value || dictResult.pos;
-            let ipaInput = document.getElementById('m-phonetic').value;
-            if(ipaInput) dictResult.phonetic = ipaInput.includes('/') ? ipaInput : `/${ipaInput}/`;
+            
+            const payload = {
+                action: 'add',
+                word: rawWord,
+                pos: document.getElementById('m-pos').value || dictResult.pos,
+                phonetic: document.getElementById('m-phonetic').value || dictResult.phonetic,
+                translation: trans,
+                category: document.getElementById('m-category').value || "自訂單字"
+            };
 
             try {
                 await fetch(GAS_URL, {
-                    method: 'POST', 
-                    body: JSON.stringify({ action: 'add', ...dictResult, translation: document.getElementById('m-trans').value }),
+                    method: 'POST', body: JSON.stringify(payload),
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
-                showMsg(`✅ 已新增`);
+                showMsg(`✅ 已新增 ${rawWord}`);
                 document.querySelectorAll('#addModal input').forEach(inp => inp.value = '');
                 fetchDataFromServer();
             } catch (err) { showMsg("❌ 新增失敗"); }
+        }
+
+        async function updateStatus(event, word, newStatus) {
+            event.stopPropagation();
+            showMsg("⏳ 更新中...");
+            try {
+                await fetch(GAS_URL, {
+                    method: 'POST', body: JSON.stringify({ action: 'update_status', word: word, newStatus: newStatus }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                showMsg(`✅ 狀態已更新`);
+                const idx = vocabCache.findIndex(w => w.word === word);
+                if(idx !== -1) vocabCache[idx].status = newStatus;
+                renderCards();
+            } catch (err) { showMsg("❌ 更新失敗"); }
+        }
+
+        async function markAsLearnedInTrain(event, word) {
+            event.stopPropagation();
+            showMsg("⏳ 記錄中...");
+            try {
+                await fetch(GAS_URL, {
+                    method: 'POST', body: JSON.stringify({ action: 'update_status', word: word, newStatus: '已記住' }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                showMsg(`✅ 已標記為記住了`);
+                const idx = vocabCache.findIndex(w => w.word === word);
+                if(idx !== -1) vocabCache[idx].status = '已記住';
+                nextCard();
+            } catch (err) { showMsg("❌ 更新失敗"); }
         }
 
         async function deleteWord(event, word) {
@@ -490,7 +489,7 @@
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
                 showMsg(`✅ 已刪除`);
-                fetchDataFromServer();
+                fetchDataFromServer(); 
             } catch (err) { showMsg("❌ 刪除失敗"); }
         }
     </script>
