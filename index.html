@@ -3,83 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 EPIC VOCAB | 智慧翻轉手帳</title>
+    <title>🔥 EPIC VOCAB | 記憶訓練手帳</title>
     <style>
         /* --- 溫暖粗獷調色盤 --- */
         :root {
             --bg-color: #FFF3E0; --primary: #FF6B6B; --secondary: #FCA311;  
             --tertiary: #4ECDC4; --dark: #3E2723; --border-thick: 6px solid var(--dark);
             --box-shadow-huge: 10px 10px 0px var(--dark); --box-shadow-hover: 16px 16px 0px var(--dark);
+            --success: #06D6A0; /* 記住了的綠色 */
         }
         
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100%; font-family: 'Nunito', 'Arial Black', Impact, sans-serif; background-color: var(--bg-color); color: var(--dark); overflow-x: hidden; scroll-behavior: smooth; background-image: radial-gradient(rgba(62, 39, 35, 0.1) 3px, transparent 3px); background-size: 35px 35px; }
         
-        /* 動態背景裝飾 */
         .decor { position: fixed; z-index: 0; pointer-events: none; border: var(--border-thick); box-shadow: 6px 6px 0px var(--dark); }
         .decor-star { width: 150px; height: 150px; background: var(--secondary); top: 5%; left: -50px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: spin 25s linear infinite;}
         .decor-blob { width: 200px; height: 200px; background: var(--tertiary); bottom: 10%; right: -80px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; animation: morphBlob 10s alternate infinite ease-in-out;}
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes morphBlob { 0% { transform: scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 100% { transform: scale(1.1) rotate(20deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
 
-        /* UI 元件 */
         .brutal-box { background: #FFF; border: var(--border-thick); border-radius: 20px; box-shadow: var(--box-shadow-huge); position: relative; z-index: 10; transition: all 0.2s; }
         .brutal-btn { background: var(--primary); color: #FFF; border: var(--border-thick); padding: 15px 30px; font-size: 1.4rem; font-family: inherit; font-weight: 900; border-radius: 15px; box-shadow: 6px 6px 0px var(--dark); cursor: pointer; transition: 0.1s; text-transform: uppercase; }
         .brutal-btn:hover { transform: translate(-3px, -3px); box-shadow: var(--box-shadow-hover); background: var(--secondary); color: var(--dark); }
         .brutal-btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0px var(--dark); }
-        .brutal-btn:disabled { filter: grayscale(80%); cursor: not-allowed; transform: none; box-shadow: 6px 6px 0px var(--dark); }
 
-        /* 版面配置 */
-        #homePage, #appPage { min-height: 100vh; padding: 3rem 1.5rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10;}
-        #appPage { display: none; justify-content: flex-start; padding-top: 1.5rem;}
-        .app-container { width: 100%; max-width: 900px; }
-        .nav-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; }
+        #homePage, #appPage, #trainPage { min-height: 100vh; padding: 3rem 1.5rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 10;}
+        #appPage, #trainPage { display: none; justify-content: flex-start; padding-top: 1.5rem;}
         
-        .hero-title { font-size: 15vw; max-font-size: 7rem; font-weight: 900; line-height: 0.9; color: var(--bg-color); text-shadow: 6px 6px 0px var(--dark), -3px -3px 0px var(--primary); margin: 0; text-align: center; transform: rotate(-3deg); -webkit-text-stroke: 3px var(--dark);}
-        .hero-subtitle { font-size: 1.8rem; font-weight: bold; background: var(--tertiary); color: var(--dark); border: var(--border-thick); padding: 10px 25px; border-radius: 50px; transform: rotate(2deg); margin: 30px 0 50px 0; box-shadow: 6px 6px 0px var(--dark); text-align: center;}
-
+        .app-container { width: 100%; max-width: 900px; }
+        .nav-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center;}
+        
+        .hero-title { font-size: 8rem; font-weight: 900; line-height: 0.9; color: var(--bg-color); text-shadow: 6px 6px 0px var(--dark), -3px -3px 0px var(--primary); margin: 0; text-align: center; transform: rotate(-3deg); -webkit-text-stroke: 3px var(--dark);}
+        
         textarea, .brutal-input { width: 100%; padding: 20px; margin-bottom: 15px; border: var(--border-thick); border-radius: 16px; font-size: 1.5rem; font-weight: bold; color: var(--dark); box-shadow: inset 6px 6px 0px rgba(62, 39, 35, 0.08); box-sizing: border-box; background: #FFF; font-family: inherit;}
-        textarea { resize: vertical; font-family: monospace; }
-        textarea:focus, .brutal-input:focus { outline: none; background: #FFFCF2; border-color: var(--secondary); }
-        .input-label { font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; display: block; color: var(--dark); }
+        
+        /* 標籤列 (類別與狀態) */
+        .filter-section { margin-bottom: 25px; }
+        .filter-title { font-size: 1.2rem; font-weight: 900; margin-bottom: 10px; color: var(--dark); }
+        .filter-bar { display: flex; gap: 10px; overflow-x: auto; padding: 5px; scrollbar-width: none; margin-bottom: 15px;}
+        .filter-bar::-webkit-scrollbar { display: none; }
+        .filter-btn { background: #FFF; color: var(--dark); border: 3px solid var(--dark); padding: 8px 18px; font-size: 1.1rem; font-weight: 900; border-radius: 50px; cursor: pointer; white-space: nowrap; box-shadow: 3px 3px 0px var(--dark); transition: 0.2s;}
+        .filter-btn:hover { transform: translateY(-2px); box-shadow: 5px 5px 0px var(--dark); background: var(--secondary);}
+        .filter-btn.active { background: var(--dark); color: #FFF; transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
 
-        /* 分類標籤列 */
-        .category-bar { display: flex; gap: 12px; margin-bottom: 25px; overflow-x: auto; padding: 10px 5px; scrollbar-width: none; }
-        .category-bar::-webkit-scrollbar { display: none; }
-        .cat-btn { background: #FFF; color: var(--dark); border: 3px solid var(--dark); padding: 8px 20px; font-size: 1.2rem; font-weight: 900; border-radius: 50px; cursor: pointer; white-space: nowrap; box-shadow: 4px 4px 0px var(--dark); transition: 0.2s;}
-        .cat-btn:hover { transform: translateY(-3px); box-shadow: 6px 6px 0px var(--dark); background: var(--secondary);}
-        .cat-btn.active { background: var(--primary); color: #FFF; transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--dark); }
-
-        /* 卡片與 3D 翻牌特效 */
+        /* 網格卡片 */
         .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 3rem; padding-bottom: 5rem;}
         .vocab-card { padding: 2.5rem 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; background: #FFF; transform: rotate(-1deg); }
-        .vocab-card:nth-child(even) { transform: rotate(1deg); }
-        .vocab-card:hover { transform: scale(1.03) rotate(0deg) translateY(-5px); box-shadow: var(--box-shadow-hover); z-index: 20;}
+        .vocab-card.learned { border-color: var(--success); opacity: 0.8;} /* 已記住的樣式 */
         .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 120px; height: 35px; background: rgba(255, 107, 107, 0.9); border: 4px solid var(--dark); z-index: 2;}
-        .vocab-card:nth-child(even) .tape { background: rgba(78, 205, 196, 0.9); transform: translateX(-50%) rotate(3deg); }
 
+        /* 3D 翻牌核心 */
         .flip-container { perspective: 1000px; flex-grow: 1; cursor: pointer; min-height: 200px; margin-top: 5px; }
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-container.is-flipped .flip-inner { transform: rotateY(180deg); }
-        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #FFF; }
+        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #FFF; border-radius: 12px;}
         .flip-back { transform: rotateY(180deg); }
         
         .cat-badge { position: absolute; top: 0; left: 0; background: var(--tertiary); border-bottom: 3px solid var(--dark); border-right: 3px solid var(--dark); padding: 4px 10px; font-weight: 900; font-size: 0.9rem; border-radius: 12px 0 10px 0;}
+        .status-badge { position: absolute; top: -20px; right: -15px; background: var(--primary); color: #FFF; border: 3px solid var(--dark); padding: 5px 12px; font-weight: 900; border-radius: 20px; transform: rotate(10deg); box-shadow: 3px 3px 0px var(--dark); z-index: 5;}
+        .status-badge.learned { background: var(--success); }
+        
         .word-title { font-size: 2.5rem; font-weight: 900; margin: 0 0 10px 0; color: var(--dark); text-transform: lowercase;}
         .pos-badge { font-size: 1.1rem; font-weight: bold; padding: 4px 15px; border: 3px solid var(--dark); border-radius: 10px; background: var(--secondary); box-shadow: 3px 3px 0px var(--dark); display: inline-block; margin-bottom: 15px;}
-        .phonetic { font-size: 1.4rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 6px 12px; border-radius: 8px; display: inline-block; transform: skewX(-6deg);}
+        .phonetic { font-size: 1.4rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 6px 12px; border-radius: 8px; display: inline-block;}
         .translation-huge { font-size: 2.2rem; font-weight: 900; color: var(--primary); border-bottom: 5px dashed var(--dark); padding-bottom: 10px;}
-        .flip-hint { font-size: 0.9rem; font-weight: 900; color: #AAA; margin-top: 15px; animation: bounceHint 1.5s infinite; }
-        @keyframes bounceHint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
-
+        
         .card-actions { display: flex; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 3px dashed rgba(0,0,0,0.1); }
-        .btn-speak { flex: 2; background: var(--tertiary); color: var(--dark); border: 3px solid var(--dark); border-radius: 10px; font-size: 1.2rem; font-weight: 900; cursor: pointer; padding: 10px; box-shadow: 4px 4px 0px var(--dark); transition: 0.1s;}
-        .btn-speak:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px var(--dark); }
-        .btn-del { flex: 1; background: var(--bg-color); color: var(--dark); border: 3px solid var(--dark); border-radius: 10px; font-size: 1.2rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--dark);}
+        .btn-act { flex: 1; background: var(--bg-color); color: var(--dark); border: 3px solid var(--dark); border-radius: 10px; font-size: 1.1rem; font-weight: 900; cursor: pointer; padding: 10px; box-shadow: 4px 4px 0px var(--dark); transition: 0.1s;}
+        .btn-act:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0px var(--dark); }
+        
+        /* --- 訓練模式專屬樣式 --- */
+        .train-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;}
+        .train-card { width: 100%; min-height: 350px; padding: 3rem 2rem; }
+        .train-card .word-title { font-size: 4rem; margin-bottom: 20px;}
+        .train-card .translation-huge { font-size: 3.5rem; }
+        .train-controls { display: flex; width: 100%; gap: 15px; margin-top: 30px; justify-content: space-between;}
+        .train-btn { flex: 1; padding: 20px; font-size: 1.5rem; }
         
         #status { font-size: 1.4rem; font-weight: 900; background: #FFF; color: var(--dark); padding: 12px 30px; border: var(--border-thick); border-radius: 15px; display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; box-shadow: 8px 8px 0px var(--dark); }
         #addModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(62, 39, 35, 0.85); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center;}
         .modal-content { background: var(--bg-color); padding: 2.5rem; width: 90%; max-width: 450px; transform: rotate(-1deg); overflow-y: auto; max-height: 90vh;}
-        .modal-content input { width: 100%; border: var(--border-thick); border-radius: 10px; font-size: 1.3rem; padding: 12px; margin-bottom: 15px; box-shadow: inset 4px 4px 0px rgba(0,0,0,0.05); box-sizing: border-box; font-family: inherit; font-weight: bold;}
     </style>
 </head>
 <body>
@@ -91,47 +93,74 @@
     <!-- 首頁 -->
     <div id="homePage">
         <h1 class="hero-title">EPIC<br>VOCAB</h1>
-        <div class="hero-subtitle">🚀 視覺衝擊！智慧分類手帳 🚀</div>
-        <button class="brutal-btn" style="font-size: 2rem; padding: 20px 50px;" onclick="switchPage('appPage')">LET'S GO ➔</button>
+        <div class="hero-subtitle">🚀 視覺衝擊！記憶訓練手帳 🚀</div>
+        <button class="brutal-btn" style="font-size: 2rem; padding: 20px 50px;" onclick="switchPage('appPage')">進入單字庫 ➔</button>
     </div>
 
-    <!-- 系統頁面 -->
+    <!-- 系統頁面 (瀏覽模式) -->
     <div id="appPage">
         <div class="app-container">
             <div class="nav-bar">
-                <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('homePage')">🏠 返回</button>
-                <button class="brutal-btn" style="background: var(--tertiary); color: var(--dark);" onclick="document.getElementById('addModal').style.display='flex'">➕ 手動擴充</button>
+                <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('homePage')">🏠 首頁</button>
+                <div style="display: flex; gap:10px;">
+                    <button class="brutal-btn" style="background: var(--tertiary);" onclick="document.getElementById('addModal').style.display='flex'">➕ 新增</button>
+                    <!-- 進入訓練模式按鈕 -->
+                    <button class="brutal-btn" style="background: var(--primary);" onclick="startTraining()">🎯 開始訓練</button>
+                </div>
             </div>
 
-            <div class="brutal-box" style="padding: 2.5rem; margin-bottom: 3rem;">
-                <h2 style="margin-top:0; font-size: 2.5rem; font-weight: 900;">🔥 丟入文章</h2>
-                <span class="input-label">🏷️ 自訂類別 (若留白則啟動專業 AI 判定)：</span>
-                <input type="text" id="batchCategory" class="brutal-input" placeholder="例：期末考範圍、多益必考...">
-                <textarea id="article" rows="3" placeholder="貼上滿滿的英文文獻..."></textarea>
-                <button id="submitBtn" class="brutal-btn" style="width: 100%; font-size: 1.6rem;" onclick="processText()">自動萃取 & 智慧分類</button>
+            <div class="brutal-box" style="padding: 2.5rem; margin-bottom: 2rem;">
+                <h2 style="margin-top:0; font-size: 2rem; font-weight: 900;">🔥 丟入文章</h2>
+                <textarea id="article" rows="2" placeholder="貼上英文文獻，自動萃取..."></textarea>
+                <button id="submitBtn" class="brutal-btn" style="width: 100%; font-size: 1.4rem;" onclick="processText()">自動萃取 & 智慧分類</button>
             </div>
             
-            <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap: wrap; gap: 10px;">
-                <h2 style="font-size: 3rem; margin: 0; font-weight: 900;">📚 單字翻翻卡</h2>
-                <button class="brutal-btn" style="padding: 10px 20px; font-size: 1.2rem; background: var(--secondary); color:var(--dark);" onclick="fetchDataFromServer()">🔄 雲端同步</button>
+            <div class="filter-section">
+                <div class="filter-title">🏷️ 類別過濾</div>
+                <div id="categoryBar" class="filter-bar"></div>
+                <div class="filter-title">🧠 記憶狀態</div>
+                <div class="filter-bar">
+                    <button class="filter-btn active" id="filter-all" onclick="setStatusFilter('全部')">全部</button>
+                    <button class="filter-btn" id="filter-learning" onclick="setStatusFilter('學習中')">📚 學習中</button>
+                    <button class="filter-btn" id="filter-learned" onclick="setStatusFilter('已記住')">✅ 已記住</button>
+                </div>
             </div>
 
-            <!-- 動態分類標籤列 -->
-            <div id="categoryBar" class="category-bar"></div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 20px;">
+                <h2 style="font-size: 2.5rem; margin: 0; font-weight: 900;">📚 我的單字盒</h2>
+                <button class="brutal-btn" style="padding: 10px 20px; font-size: 1.2rem; background: var(--secondary);" onclick="fetchDataFromServer()">🔄 雲端同步</button>
+            </div>
             
-            <!-- 卡片容器 -->
             <div id="vocabContainer" class="vocab-grid"></div>
+        </div>
+    </div>
+
+    <!-- 訓練模式頁面 (焦點模式) -->
+    <div id="trainPage">
+        <div class="nav-bar" style="width: 100%; max-width: 600px;">
+            <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('appPage')">🔙 退出訓練</button>
+            <h2 id="trainProgress" style="margin:0;">1 / 10</h2>
+        </div>
+        
+        <div class="train-container">
+            <!-- 訓練卡片容器 -->
+            <div id="trainCardContainer" style="width: 100%;"></div>
+            
+            <!-- 控制按鈕 -->
+            <div class="train-controls">
+                <button class="brutal-btn train-btn" style="background: #FFF; color: var(--dark);" onclick="prevCard()">⬅️ 上一個</button>
+                <button class="brutal-btn train-btn" style="background: var(--primary);" onclick="nextCard()">下一個 ➡️</button>
+            </div>
         </div>
     </div>
 
     <!-- 新增 Modal -->
     <div id="addModal">
         <div class="brutal-box modal-content">
-            <h2 style="margin-top:0; font-size: 2.5rem;">➕ 暴力塞字</h2>
+            <h2 style="margin-top:0; font-size: 2.5rem;">➕ 手動新增</h2>
             <input type="text" id="m-word" placeholder="單字 (必填)">
-            <input type="text" id="m-category" placeholder="自訂類別 (例: 程式語言)">
-            <input type="text" id="m-pos" placeholder="詞性 (例: Noun)">
-            <input type="text" id="m-phonetic" placeholder="IPA 音標 (例: /æpəl/)">
+            <input type="text" id="m-pos" placeholder="詞性">
+            <input type="text" id="m-phonetic" placeholder="IPA 音標">
             <input type="text" id="m-trans" placeholder="中文翻譯 (必填)">
             <div style="display:flex; gap:15px; margin-top:15px;">
                 <button class="brutal-btn" style="background:#FFF; color:var(--dark); flex:1;" onclick="document.getElementById('addModal').style.display='none'">取消</button>
@@ -141,15 +170,21 @@
     </div>
 
     <script>
-        // ⚠️ 【非常重要】請將下方引號內的網址替換為你最新的 GAS API 網址！
+        // ⚠️ 記得貼上你剛剛發布的 7 欄位版 GAS API 網址
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbw2XJTyDTPHMCvdGe76FXTn8QAtI1SMoEtvM7L4TrJprufqQkamZ5Xdp0OUzs-wZqSG4g/exec'; 
         
         let vocabCache = []; 
         let currentCategory = '全部'; 
+        let currentStatus = '全部'; // 狀態過濾
+
+        // 訓練模式專用變數
+        let trainQueue = []; 
+        let trainIndex = 0;
 
         function switchPage(pageId) {
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('appPage').style.display = 'none';
+            document.getElementById('trainPage').style.display = 'none';
             document.getElementById(pageId).style.display = 'flex';
             if(pageId === 'appPage' && vocabCache.length === 0) fetchDataFromServer();
             window.scrollTo(0, 0);
@@ -162,7 +197,7 @@
         }
 
         function speakWord(event, word) {
-            event.stopPropagation(); 
+            if(event) event.stopPropagation(); 
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(word);
@@ -171,48 +206,69 @@
             }
         }
 
-        // --- 🤖 專業領域特化版分類引擎 (Smart Production & QA) ---
+        // --- 🤖 專業分類引擎 ---
         function autoCategorize(word, pos) {
             const w = word.toLowerCase();
-            
-            const qaKeywords = ['quality', 'assurance', 'testing', 'automation', 'validation', 'verification', 'vulnerability', 'script', 'injection', 'xss', 'security', 'bug', 'debug', 'scenario'];
-            const productionKeywords = ['production', 'manufacturing', 'smart', 'factory', 'sensor', 'robotics', 'optimization', 'integration', 'machinery', 'yield', 'equipment', 'logistics', 'assembly'];
-            const dataKeywords = ['python', 'pandas', 'numpy', 'classification', 'regression', 'model', 'dataset', 'algorithm', 'predict', 'scraping'];
-            const webKeywords = ['frontend', 'backend', 'flask', 'api', 'database', 'sqlite', 'server', 'framework', 'interface', 'deploy'];
+            const qaKeywords = ['quality', 'testing', 'vulnerability', 'injection', 'security', 'bug'];
+            const prodKeywords = ['production', 'smart', 'factory', 'sensor', 'robotics', 'optimization'];
+            const webKeywords = ['frontend', 'backend', 'api', 'database', 'server'];
 
-            if (qaKeywords.some(k => w.includes(k))) return "軟體品管與測試";
-            if (productionKeywords.some(k => w.includes(k))) return "智慧生產工程";
-            if (dataKeywords.some(k => w.includes(k))) return "數據與機器學習";
-            if (webKeywords.some(k => w.includes(k))) return "網頁與後端開發";
+            if (qaKeywords.some(k => w.includes(k))) return "軟體品管";
+            if (prodKeywords.some(k => w.includes(k))) return "智慧生產";
+            if (webKeywords.some(k => w.includes(k))) return "網頁開發";
 
             if (pos === "Verb") return "動詞大補帖";
-            if (pos === "Adjective") return "形容詞彙";
-            if (pos === "Noun") return "專業名詞";
             return "生活與綜合";
         }
 
-        // --- 介面渲染與資料過濾 ---
+        // --- 瀏覽模式：渲染與過濾 ---
+        function setCategory(cat) { currentCategory = cat; renderCards(); }
+        function setStatusFilter(status) {
+            currentStatus = status;
+            document.querySelectorAll('#appPage .filter-section .filter-bar')[1].querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            if(status === '全部') document.getElementById('filter-all').classList.add('active');
+            if(status === '學習中') document.getElementById('filter-learning').classList.add('active');
+            if(status === '已記住') document.getElementById('filter-learned').classList.add('active');
+            renderCards();
+        }
+
+        function getFilteredData() {
+            return vocabCache.filter(item => {
+                const matchCat = currentCategory === '全部' || item.category === currentCategory;
+                const matchStatus = currentStatus === '全部' || item.status === currentStatus;
+                return matchCat && matchStatus;
+            });
+        }
+
         function renderCards() {
             const container = document.getElementById('vocabContainer');
             const catBar = document.getElementById('categoryBar');
             
             if (vocabCache.length === 0) {
                 catBar.innerHTML = '';
-                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; font-size:2rem; padding: 2rem;">空空如也，快去塞字進來！</h2>';
+                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">空空如也，快去塞字進來！</h2>';
                 return;
             }
 
+            // 渲染類別標籤
             const categories = ['全部', ...new Set(vocabCache.map(item => item.category))];
             catBar.innerHTML = categories.map(cat => `
-                <button class="cat-btn ${cat === currentCategory ? 'active' : ''}" 
-                        onclick="setCategory('${cat}')">${cat}</button>
+                <button class="filter-btn ${cat === currentCategory ? 'active' : ''}" onclick="setCategory('${cat}')">${cat}</button>
             `).join('');
 
-            const filteredData = currentCategory === '全部' ? vocabCache : vocabCache.filter(item => item.category === currentCategory);
+            const filteredData = getFilteredData();
+            if(filteredData.length === 0) {
+                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">這個過濾條件下沒有單字喔！</h2>';
+                return;
+            }
 
-            container.innerHTML = filteredData.map(item => `
-                <div class="brutal-box vocab-card">
+            container.innerHTML = filteredData.map(item => {
+                const isLearned = item.status === '已記住';
+                return `
+                <div class="brutal-box vocab-card ${isLearned ? 'learned' : ''}">
                     <div class="tape"></div>
+                    <div class="status-badge ${isLearned ? 'learned' : ''}">${item.status}</div>
+                    
                     <div class="flip-container" onclick="this.classList.toggle('is-flipped')">
                         <div class="flip-inner">
                             <div class="flip-front">
@@ -220,31 +276,109 @@
                                 <h3 class="word-title">${item.word}</h3>
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="phonetic">${item.phonetic}</div>
-                                <div class="flip-hint">👉 點擊翻面</div>
                             </div>
                             <div class="flip-back">
                                 <div class="cat-badge">${item.category}</div>
                                 <div class="translation-huge">${item.translation}</div>
-                                <div class="flip-hint">👉 點擊翻回</div>
                             </div>
                         </div>
                     </div>
                     <div class="card-actions">
-                        <button class="btn-speak" onclick="speakWord(event, '${item.word}')">🔊 PLAY</button>
-                        <button class="btn-del" onclick="deleteWord(event, '${item.word}')">✕ DEL</button>
+                        <button class="btn-act" onclick="speakWord(event, '${item.word}')">🔊 唸</button>
+                        ${isLearned 
+                            ? `<button class="btn-act" style="background:var(--secondary);" onclick="updateStatus(event, '${item.word}', '學習中')">🔄 忘記了</button>`
+                            : `<button class="btn-act" style="background:var(--success); color:white;" onclick="updateStatus(event, '${item.word}', '已記住')">✅ 記住了</button>`
+                        }
+                        <button class="btn-act" style="background:#FF595E; color:white;" onclick="deleteWord(event, '${item.word}')">✕ 刪</button>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
-        function setCategory(cat) {
-            currentCategory = cat;
-            renderCards();
+        // --- 🚀 焦點訓練模式 (Focus Mode) ---
+        function startTraining() {
+            // 只挑選出當前過濾條件下的「學習中」單字來訓練
+            trainQueue = getFilteredData().filter(w => w.status === '學習中');
+            
+            if(trainQueue.length === 0) {
+                alert("你太棒了！目前的條件下沒有「學習中」的單字需要訓練。");
+                return;
+            }
+            
+            // 打亂陣列 (隨機排序)
+            trainQueue = trainQueue.sort(() => Math.random() - 0.5);
+            trainIndex = 0;
+            switchPage('trainPage');
+            renderTrainCard();
         }
 
+        function renderTrainCard() {
+            document.getElementById('trainProgress').innerText = `${trainIndex + 1} / ${trainQueue.length}`;
+            const item = trainQueue[trainIndex];
+            
+            document.getElementById('trainCardContainer').innerHTML = `
+                <div class="brutal-box train-card">
+                    <div class="flip-container" onclick="this.classList.toggle('is-flipped')" style="min-height: 250px;">
+                        <div class="flip-inner">
+                            <div class="flip-front">
+                                <h3 class="word-title">${item.word}</h3>
+                                <div class="phonetic" style="font-size: 2rem;">${item.phonetic}</div>
+                                <div style="margin-top:20px; font-weight:bold; color:#888;">👉 點擊翻看答案</div>
+                            </div>
+                            <div class="flip-back">
+                                <span class="pos-badge">${item.pos}</span>
+                                <div class="translation-huge">${item.translation}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-actions" style="margin-top: 30px;">
+                        <button class="brutal-btn" style="flex:1; background:var(--tertiary); color:var(--dark); font-size:1.2rem; padding:15px;" onclick="speakWord(event, '${item.word}')">🔊 聽發音</button>
+                        <button class="brutal-btn" style="flex:1; background:var(--success); font-size:1.2rem; padding:15px;" onclick="markAsLearnedInTrain(event, '${item.word}')">✅ 我記住了</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function nextCard() {
+            if (trainIndex < trainQueue.length - 1) {
+                trainIndex++;
+                renderTrainCard();
+            } else {
+                alert("🎉 恭喜！這組訓練完成！");
+                switchPage('appPage');
+            }
+        }
+
+        function prevCard() {
+            if (trainIndex > 0) {
+                trainIndex--;
+                renderTrainCard();
+            } else {
+                showMsg("已經是第一張囉！");
+            }
+        }
+
+        async function markAsLearnedInTrain(event, word) {
+            event.stopPropagation();
+            showMsg("⏳ 記錄中...");
+            try {
+                await fetch(GAS_URL, {
+                    method: 'POST', body: JSON.stringify({ action: 'update_status', word: word, newStatus: '已記住' }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                showMsg(`✅ 已標記為記住了`);
+                // 更新快取
+                const idx = vocabCache.findIndex(w => w.word === word);
+                if(idx !== -1) vocabCache[idx].status = '已記住';
+                // 訓練中自動跳下一張
+                nextCard();
+            } catch (err) { showMsg("❌ 更新失敗"); }
+        }
+
+        // --- 資料庫互動邏輯 ---
         async function fetchDataFromServer() {
             const container = document.getElementById('vocabContainer');
-            container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; font-size:2rem; padding: 2rem;">雲端同步中... ☁️</h2>';
+            container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">雲端同步中... ☁️</h2>';
             try {
                 const res = await fetch(GAS_URL);
                 const result = await res.json();
@@ -252,10 +386,26 @@
                     vocabCache = result.data.reverse();
                     renderCards();
                 }
-            } catch (err) { container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; color:red; font-size:2rem;">讀取失敗 💀</h2>'; }
+            } catch (err) { container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; color:red;">讀取失敗 💀</h2>'; }
         }
 
-        // --- 前端字典 API 查詢引擎 ---
+        // 獨立更新狀態按鈕 (在瀏覽模式中使用)
+        async function updateStatus(event, word, newStatus) {
+            event.stopPropagation();
+            showMsg("⏳ 更新中...");
+            try {
+                await fetch(GAS_URL, {
+                    method: 'POST', body: JSON.stringify({ action: 'update_status', word: word, newStatus: newStatus }),
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+                showMsg(`✅ 狀態已更新`);
+                // 更新本機快取以加速渲染
+                const idx = vocabCache.findIndex(w => w.word === word);
+                if(idx !== -1) vocabCache[idx].status = newStatus;
+                renderCards();
+            } catch (err) { showMsg("❌ 更新失敗"); }
+        }
+
         async function fetchDictFrontend(rawWord) {
             let w = rawWord.toLowerCase().trim();
             let pos = "Unknown", ipa = "無音標";
@@ -276,10 +426,8 @@
             return { word: w, pos: pos, phonetic: ipa };
         }
 
-        // --- 資料寫入邏輯 ---
         async function processText() {
             const text = document.getElementById('article').value;
-            const customCategory = document.getElementById('batchCategory').value.trim();
             const btn = document.getElementById('submitBtn');
             if (!text.trim()) return showMsg("⚠️ 內容不能為空！");
 
@@ -291,22 +439,18 @@
 
             const enrichedWords = await Promise.all(uniqueWords.map(async w => {
                 const data = await fetchDictFrontend(w);
-                data.category = customCategory ? customCategory : autoCategorize(data.word, data.pos);
+                data.category = autoCategorize(data.word, data.pos);
                 return data;
             }));
 
             try {
-                const res = await fetch(GAS_URL, {
+                await fetch(GAS_URL, {
                     method: 'POST', body: JSON.stringify({ action: 'save_words', words: enrichedWords }),
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
                 });
-                const result = await res.json();
-                if (result.status === 'success') {
-                    showMsg(`✅ 成功建立 ${enrichedWords.length} 張翻牌！`);
-                    document.getElementById('article').value = '';
-                    document.getElementById('batchCategory').value = '';
-                    fetchDataFromServer();
-                }
+                showMsg(`✅ 成功建立 ${enrichedWords.length} 張卡片！`);
+                document.getElementById('article').value = '';
+                fetchDataFromServer();
             } catch (err) { showMsg("❌ 伺服器連線失敗"); }
             finally { btn.disabled = false; btn.innerText = "自動萃取 & 智慧分類"; }
         }
@@ -315,18 +459,14 @@
             const rawWord = document.getElementById('m-word').value;
             if(!rawWord) return alert("單字為必填欄位！");
             
-            const btn = document.querySelector('.btn-confirm');
-            btn.disabled = true;
             showMsg("⏳ 寫入中...");
             document.getElementById('addModal').style.display = 'none';
 
             const dictResult = await fetchDictFrontend(rawWord);
-            const userPos = document.getElementById('m-pos').value;
-            const userIpa = document.getElementById('m-phonetic').value;
-            
-            dictResult.category = document.getElementById('m-category').value || "自訂單字";
-            if (userPos) dictResult.pos = userPos;
-            if (userIpa) dictResult.phonetic = userIpa.includes('/') ? userIpa : `/${userIpa}/`;
+            dictResult.category = "自訂單字";
+            dictResult.pos = document.getElementById('m-pos').value || dictResult.pos;
+            let ipaInput = document.getElementById('m-phonetic').value;
+            if(ipaInput) dictResult.phonetic = ipaInput.includes('/') ? ipaInput : `/${ipaInput}/`;
 
             try {
                 await fetch(GAS_URL, {
@@ -338,7 +478,6 @@
                 document.querySelectorAll('#addModal input').forEach(inp => inp.value = '');
                 fetchDataFromServer();
             } catch (err) { showMsg("❌ 新增失敗"); }
-            finally { btn.disabled = false; }
         }
 
         async function deleteWord(event, word) {
