@@ -3,38 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 EPIC VOCAB | AI 智能全能手帳</title>
+    <title>📖 VOCAB WORKBOOK | 英語學習手冊</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
+        /* --- 經典學習手冊溫暖色系 --- */
         :root {
-            --bg-color: #FFF3E0; --primary: #FF6B6B; --secondary: #FCA311;  
-            --tertiary: #4ECDC4; --dark: #3E2723; --border-thick: 6px solid var(--dark);
-            --box-shadow-huge: 10px 10px 0px var(--dark); --box-shadow-hover: 16px 16px 0px var(--dark);
-            --success: #06D6A0;
+            --bg-color: #F4F1EA; --primary: #D9534F; --secondary: #F0AD4E;  
+            --tertiary: #5BC0DE; --dark: #2C3E50; --border-thick: 4px solid var(--dark);
+            --box-shadow-card: 6px 6px 0px var(--dark); --box-shadow-hover: 10px 10px 0px var(--dark);
+            --success: #5CB85C; --paper-bg: #FFFFFF;
         }
         
         body, html { 
             margin: 0; padding: 0; width: 100%; min-height: 100%; 
-            font-family: 'Nunito', 'Arial Black', Impact, sans-serif; 
+            font-family: 'Nunito', sans-serif; 
             background-color: var(--bg-color); color: var(--dark); 
             overflow-x: hidden; scroll-behavior: smooth; 
-            background-image: radial-gradient(rgba(62, 39, 35, 0.1) 3px, transparent 3px); 
-            background-size: 35px 35px; 
+            background-image: linear-gradient(90deg, rgba(44,62,80,0.04) 1px, transparent 1px), linear-gradient(0deg, rgba(44,62,80,0.04) 1px, transparent 1px);
+            background-size: 20px 20px; 
         }
         
-        .decor { position: fixed; z-index: 0; pointer-events: none; border: var(--border-thick); box-shadow: 6px 6px 0px var(--dark); }
-        .decor-star { width: 150px; height: 150px; background: var(--secondary); top: 5%; left: -50px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: spin 25s linear infinite;}
-        .decor-blob { width: 200px; height: 200px; background: var(--tertiary); bottom: 10%; right: -80px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; animation: morphBlob 10s alternate infinite ease-in-out;}
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes morphBlob { 0% { transform: scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; } 100% { transform: scale(1.1) rotate(20deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
+        .decor { position: fixed; z-index: 0; pointer-events: none; border: var(--border-thick); box-shadow: 4px 4px 0px var(--dark); }
+        .decor-star { width: 100px; height: 100px; background: var(--secondary); top: 5%; left: -30px; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+        .decor-blob { width: 150px; height: 150px; background: var(--tertiary); bottom: 5%; right: -40px; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
 
-        .brutal-box { background: #FFF; border: var(--border-thick); border-radius: 20px; box-shadow: var(--box-shadow-huge); position: relative; z-index: 10; transition: all 0.2s; }
-        .brutal-btn { background: var(--primary); color: #FFF; border: var(--border-thick); padding: 12px 24px; font-size: 1.2rem; font-family: 'Nunito', sans-serif; font-weight: 900; border-radius: 12px; box-shadow: 5px 5px 0px var(--dark); cursor: pointer; transition: 0.1s; text-transform: uppercase; }
-        .brutal-btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px var(--dark); background: var(--secondary); color: var(--dark); }
+        .brutal-box { background: var(--paper-bg); border: var(--border-thick); border-radius: 12px; box-shadow: var(--box-shadow-card); position: relative; z-index: 10; transition: all 0.2s; }
+        .brutal-btn { background: var(--primary); color: #FFF; border: var(--border-thick); padding: 10px 20px; font-size: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 900; border-radius: 8px; box-shadow: 4px 4px 0px var(--dark); cursor: pointer; transition: 0.1s; text-transform: uppercase; }
+        .brutal-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px var(--dark); background: var(--secondary); color: var(--dark); }
         .brutal-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
         .brutal-btn:disabled { filter: grayscale(80%); cursor: not-allowed; }
 
@@ -42,57 +41,57 @@
         #appPage, #trainPage, #quizPage { display: none; justify-content: flex-start; padding-top: 1.5rem;}
         
         .app-container { width: 100%; max-width: 900px; }
-        .nav-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; align-items: center; width: 100%; max-width: 600px;}
         
-        .hero-title { font-size: 5rem; font-weight: 900; line-height: 1; color: var(--bg-color); text-shadow: 6px 6px 0px var(--dark), -3px -3px 0px var(--primary); margin: 0 0 20px 0; text-align: center; transform: rotate(-2deg); -webkit-text-stroke: 3px var(--dark);}
-        .hero-subtitle { font-size: 1.4rem; font-weight: bold; background: var(--tertiary); color: var(--dark); border: var(--border-thick); padding: 10px 20px; border-radius: 50px; transform: rotate(1deg); margin-bottom: 30px; box-shadow: 6px 6px 0px var(--dark); text-align: center;}
+        /* 💡 【手冊化頂部導覽列】統整成質感筆記本橫條 */
+        .workbook-header { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 550px; background: var(--paper-bg); border: var(--border-thick); border-radius: 12px; padding: 12px 20px; box-sizing: border-box; box-shadow: var(--box-shadow-card); margin-bottom: 25px; }
+        
+        .hero-title { font-size: 4rem; font-weight: 900; line-height: 1; color: var(--dark); text-shadow: 3px 3px 0px var(--secondary); margin: 0 0 15px 0; text-align: center;}
+        .hero-subtitle { font-size: 1.2rem; font-weight: bold; background: var(--paper-bg); color: var(--dark); border: var(--border-thick); padding: 8px 20px; border-radius: 8px; margin-bottom: 30px; box-shadow: 4px 4px 0px var(--dark); text-align: center;}
 
-        textarea, .brutal-input { width: 100%; padding: 15px; margin-bottom: 12px; border: var(--border-thick); border-radius: 14px; font-size: 1.3rem; font-weight: 900; color: var(--dark); box-shadow: inset 5px 5px 0px rgba(62, 39, 35, 0.08); box-sizing: border-box; background: #FFF; font-family: 'Nunito', sans-serif;}
+        textarea, .brutal-input { width: 100%; padding: 12px; margin-bottom: 12px; border: var(--border-thick); border-radius: 8px; font-size: 1.1rem; font-weight: 700; color: var(--dark); box-sizing: border-box; background: var(--paper-bg); font-family: 'Nunito', sans-serif;}
         textarea { resize: vertical; }
 
         .filter-section { margin-bottom: 20px; }
-        .filter-title { font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; color: var(--dark); }
+        .filter-title { font-size: 1rem; font-weight: 900; margin-bottom: 6px; color: var(--dark); }
         .filter-bar { display: flex; gap: 8px; overflow-x: auto; padding: 5px; scrollbar-width: none; margin-bottom: 10px;}
         .filter-bar::-webkit-scrollbar { display: none; }
-        .filter-btn { background: #FFF; color: var(--dark); border: 3px solid var(--dark); padding: 6px 15px; font-size: 1rem; font-weight: 900; border-radius: 50px; cursor: pointer; white-space: nowrap; box-shadow: 3px 3px 0px var(--dark); transition: 0.2s;}
+        .filter-btn { background: var(--paper-bg); color: var(--dark); border: 2px solid var(--dark); padding: 5px 12px; font-size: 0.9rem; font-weight: 900; border-radius: 20px; cursor: pointer; white-space: nowrap; box-shadow: 2px 2px 0px var(--dark); transition: 0.2s;}
         .filter-btn:hover { background: var(--secondary);}
-        .filter-btn.active { background: var(--dark); color: #FFF; transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
+        .filter-btn.active { background: var(--dark); color: #FFF; box-shadow: none; }
 
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; padding-bottom: 4rem;}
-        .vocab-card { padding: 2.5rem 1.2rem 1.2rem 1.2rem; display: flex; flex-direction: column; background: #FFF; transform: rotate(-1deg); }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; padding-bottom: 4rem;}
+        .vocab-card { padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; }
         .vocab-card.learned { border-color: var(--success); opacity: 0.85;}
-        .vocab-card:nth-child(even) { transform: rotate(1deg); }
-        .tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-3deg); width: 110px; height: 32px; background: rgba(255, 107, 107, 0.9); border: 4px solid var(--dark); z-index: 2;}
-
-        /* 3D 翻牌修正 */
-        .flip-container { perspective: 1000px; flex-grow: 1; cursor: pointer; min-height: 220px; margin-top: 5px; }
+        
+        .flip-container { perspective: 1000px; flex-grow: 1; cursor: pointer; min-height: 200px; margin-top: 5px; }
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-container.is-flipped .flip-inner { transform: rotateY(180deg); }
-        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #FFF; border-radius: 12px; padding: 10px; box-sizing: border-box;}
+        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--paper-bg); border-radius: 8px; padding: 10px; box-sizing: border-box;}
         .flip-back { transform: rotateY(180deg); overflow-y: auto;}
         
-        .cat-badge { position: absolute; top: 0; left: 0; background: var(--tertiary); border-bottom: 3px solid var(--dark); border-right: 3px solid var(--dark); padding: 3px 8px; font-weight: 900; font-size: 0.8rem; border-radius: 10px 0 8px 0;}
-        .status-badge { position: absolute; top: -18px; right: -12px; background: var(--primary); color: #FFF; border: 3px solid var(--dark); padding: 4px 10px; font-weight: 900; font-size: 0.9rem; border-radius: 15px; transform: rotate(10deg); box-shadow: 3px 3px 0px var(--dark); z-index: 5;}
+        .cat-badge { position: absolute; top: 0; left: 0; background: var(--tertiary); border-bottom: 2px solid var(--dark); border-right: 2px solid var(--dark); padding: 2px 8px; font-weight: 900; font-size: 0.75rem; border-radius: 8px 0 6px 0;}
+        .status-badge { position: absolute; top: -12px; right: -10px; background: var(--primary); color: #FFF; border: 2px solid var(--dark); padding: 2px 8px; font-weight: 900; font-size: 0.75rem; border-radius: 10px; box-shadow: 2px 2px 0px var(--dark); z-index: 5;}
         .status-badge.learned { background: var(--success); }
         
-        .word-title { font-size: 2.2rem; font-weight: 900; margin: 0 0 5px 0; color: var(--dark); }
-        .pos-badge { font-size: 1rem; font-weight: bold; padding: 2px 10px; border: 2px solid var(--dark); border-radius: 8px; background: var(--secondary); box-shadow: 2px 2px 0px var(--dark); display: inline-block; margin-bottom: 8px;}
-        .phonetic { font-size: 1.2rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 4px 10px; border-radius: 6px; display: inline-block; transform: skewX(-4deg);}
-        .translation-huge { font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 5px;}
-        .ai-note { font-size: 0.9rem; font-weight: bold; color: #555; background: #FFF3E0; padding: 6px 10px; border-radius: 8px; border: 2px solid var(--dark); margin-top: 5px; width: 90%; text-align: left;}
+        /* 💡 【防止溢位】限制字體最大尺寸，確保完美置中與對齊 */
+        .word-title { font-size: 2rem; font-weight: 900; margin: 0 0 5px 0; color: var(--dark); word-break: break-all; }
+        .pos-badge { font-size: 0.9rem; font-weight: bold; padding: 2px 8px; border: 2px solid var(--dark); border-radius: 6px; background: var(--secondary); display: inline-block; margin-bottom: 6px;}
+        .phonetic { font-size: 1.1rem; font-family: monospace; font-weight: 900; background: var(--dark); color: #FFF; padding: 3px 8px; border-radius: 4px; display: inline-block;}
+        .translation-huge { font-size: 1.6rem; font-weight: 900; color: var(--primary); margin-bottom: 4px; word-break: break-all;}
+        .ai-note { font-size: 0.85rem; font-weight: bold; color: #444; background: #FFF9E6; padding: 6px; border-radius: 6px; border: 2px solid var(--dark); margin-top: 4px; width: 95%; text-align: left; box-sizing: border-box;}
         
-        .card-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 3px dashed rgba(0,0,0,0.1); }
-        .btn-act { flex: 1; background: var(--bg-color); color: var(--dark); border: 3px solid var(--dark); border-radius: 8px; font-size: 1rem; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; padding: 8px; box-shadow: 3px 3px 0px var(--dark); transition: 0.1s;}
-        .btn-act:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px var(--dark); }
+        .card-actions { display: flex; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 2px dashed rgba(44,62,80,0.2); }
+        .btn-act { flex: 1; background: var(--paper-bg); color: var(--dark); border: 2px solid var(--dark); border-radius: 6px; font-size: 0.95rem; font-family: 'Nunito', sans-serif; font-weight: 900; cursor: pointer; padding: 6px; box-shadow: 2px 2px 0px var(--dark); transition: 0.1s;}
+        .btn-act:active { transform: translate(1px, 1px); box-shadow: none; }
         
-        /* 💡 【完美修復跑版】訓練模式固定尺寸與置中 */
+        /* 💡 【完美手冊訓練模式】卡片與按鈕絕對不跑版 */
         .train-container { width: 100%; max-width: 550px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1;}
-        .train-card { width: 100%; min-height: 380px; padding: 2rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;}
-        .train-controls { display: flex; width: 100%; gap: 15px; margin-top: 20px; justify-content: space-between;}
+        .train-card { width: 100%; min-height: 360px; padding: 1.5rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;}
+        .train-controls { display: flex; width: 100%; max-width: 550px; gap: 12px; margin-top: 20px; justify-content: space-between;}
         
-        #status { font-size: 1.2rem; font-weight: 900; background: #FFF; color: var(--dark); padding: 10px 25px; border: var(--border-thick); border-radius: 12px; display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; box-shadow: 6px 6px 0px var(--dark); }
-        #addModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(62, 39, 35, 0.85); backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center;}
-        .modal-content { background: var(--bg-color); padding: 2rem; width: 90%; max-width: 400px; transform: rotate(-1deg); }
+        #status { font-size: 1.1rem; font-weight: 900; background: var(--paper-bg); color: var(--dark); padding: 8px 20px; border: var(--border-thick); border-radius: 8px; display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; box-shadow: 4px 4px 0px var(--dark); }
+        #addModal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(44,62,80,0.7); backdrop-filter: blur(4px); z-index: 2000; justify-content: center; align-items: center;}
+        .modal-content { background: var(--paper-bg); padding: 2rem; width: 90%; max-width: 400px; }
     </style>
 </head>
 <body>
@@ -103,27 +102,27 @@
 
     <!-- 首頁 -->
     <div id="homePage">
-        <h1 class="hero-title">EPIC<br>VOCAB</h1>
-        <div class="hero-subtitle">🚀 視覺衝擊！AI 全能智慧手帳 🚀</div>
-        <button class="brutal-btn" style="font-size: 1.8rem; padding: 18px 45px;" onclick="switchPage('appPage')">進入單字庫 ➔</button>
+        <h1 class="hero-title">VOCAB<br>WORKBOOK</h1>
+        <div class="hero-subtitle">📖 AI 智慧英文學習手冊 📖</div>
+        <button class="brutal-btn" style="font-size: 1.5rem; padding: 15px 35px;" onclick="switchPage('appPage')">翻開手冊 ➔</button>
     </div>
 
     <!-- 主頁 -->
     <div id="appPage">
         <div class="app-container">
-            <div class="nav-bar" style="max-width: 100%;">
-                <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('homePage')">🏠 首頁</button>
-                <div style="display: flex; gap:8px; flex-wrap: wrap;">
-                    <button class="brutal-btn" style="background: var(--tertiary);" onclick="document.getElementById('addModal').style.display='flex'">➕ 新增</button>
-                    <button class="brutal-btn" style="background: var(--secondary);" onclick="startQuiz()">📝 AI 測驗</button>
-                    <button class="brutal-btn" style="background: var(--primary);" onclick="startTraining()">🎯 訓練</button>
+            <div class="workbook-header">
+                <button class="brutal-btn" style="background: var(--paper-bg); color: var(--dark); padding: 6px 14px; font-size: 0.95rem;" onclick="switchPage('homePage')">🏠 首頁</button>
+                <div style="display: flex; gap:6px;">
+                    <button class="brutal-btn" style="background: var(--tertiary); padding: 6px 12px; font-size: 0.95rem;" onclick="document.getElementById('addModal').style.display='flex'">➕ 新增</button>
+                    <button class="brutal-btn" style="background: var(--secondary); padding: 6px 12px; font-size: 0.95rem;" onclick="startQuiz()">📝 測驗</button>
+                    <button class="brutal-btn" style="background: var(--primary); padding: 6px 12px; font-size: 0.95rem;" onclick="startTraining()">🎯 訓練</button>
                 </div>
             </div>
 
-            <div class="brutal-box" style="padding: 2rem; margin-bottom: 1.5rem;">
-                <h2 style="margin-top:0; font-size: 1.6rem; font-weight: 900;">✨ AI 智慧萃取中心</h2>
-                <textarea id="article" rows="2" placeholder="貼上英文文章，AI 將自動生成翻譯、記憶口訣與例句..."></textarea>
-                <button id="submitBtn" class="brutal-btn" style="width: 100%; background: var(--dark); color: #FFF;" onclick="processTextWithAI()">🚀 啟動 AI 深度解析</button>
+            <div class="brutal-box" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                <h3 style="margin-top:0; font-size: 1.2rem; font-weight: 900;">✨ AI 智慧單字匯入</h3>
+                <textarea id="article" rows="2" placeholder="貼上英文文章，手冊將自動萃取單字、口訣與例句..."></textarea>
+                <button id="submitBtn" class="brutal-btn" style="width: 100%; background: var(--dark); color: #FFF; padding: 10px;" onclick="processTextWithAI()">🚀 開始解析</button>
             </div>
             
             <div class="filter-section">
@@ -137,35 +136,35 @@
                 </div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 15px;">
-                <h2 style="font-size: 2rem; margin: 0; font-weight: 900;">📚 我的單字盒</h2>
-                <button class="brutal-btn" style="padding: 8px 16px; font-size: 1rem; background: var(--secondary);" onclick="fetchDataFromServer()">🔄 同步</button>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 12px;">
+                <h3 style="font-size: 1.5rem; margin: 0; font-weight: 900;">📚 我的單字筆記</h3>
+                <button class="brutal-btn" style="padding: 6px 12px; font-size: 0.9rem; background: var(--secondary);" onclick="fetchDataFromServer()">🔄 同步</button>
             </div>
             
             <div id="vocabContainer" class="vocab-grid"></div>
         </div>
     </div>
 
-    <!-- 訓練模式 (完美置中不跑版) -->
+    <!-- 訓練模式 (💡 完美整合筆記本頂部導覽列) -->
     <div id="trainPage">
-        <div class="nav-bar">
-            <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('appPage')">🔙 退出</button>
-            <h2 id="trainProgress" style="margin:0; font-size: 1.3rem;">1 / 10</h2>
+        <div class="workbook-header">
+            <button class="brutal-btn" style="background: var(--paper-bg); color: var(--dark); padding: 6px 14px; font-size: 0.95rem;" onclick="switchPage('appPage')">🔙 退出</button>
+            <span id="trainProgress" style="font-weight: 900; font-size: 1.1rem;">1 / 10</span>
         </div>
         <div class="train-container">
             <div id="trainCardContainer" style="width: 100%;"></div>
             <div class="train-controls">
-                <button class="brutal-btn" style="flex: 1; background: #FFF; color: var(--dark);" onclick="prevCard()">⬅️ 上一個</button>
-                <button class="brutal-btn" style="flex: 1; background: var(--secondary);" onclick="nextCard()">下一個 ➡️</button>
+                <button class="brutal-btn" style="flex: 1; background: var(--paper-bg); color: var(--dark); padding: 10px;" onclick="prevCard()">⬅️ 上一張</button>
+                <button class="brutal-btn" style="flex: 1; background: var(--secondary); color: var(--dark); padding: 10px;" onclick="nextCard()">下一張 ➡️</button>
             </div>
         </div>
     </div>
 
     <!-- AI 測驗模式頁面 -->
     <div id="quizPage">
-        <div class="nav-bar">
-            <button class="brutal-btn" style="background: #FFF; color: var(--dark);" onclick="switchPage('appPage')">🔙 退出測驗</button>
-            <h2 style="margin:0; font-size: 1.3rem;">📝 AI 智慧隨堂考</h2>
+        <div class="workbook-header">
+            <button class="brutal-btn" style="background: var(--paper-bg); color: var(--dark); padding: 6px 14px; font-size: 0.95rem;" onclick="switchPage('appPage')">🔙 退出</button>
+            <span style="font-weight: 900; font-size: 1.1rem;">📝 隨堂考</span>
         </div>
         <div class="train-container" id="quizContainer"></div>
     </div>
@@ -173,14 +172,14 @@
     <!-- 新增 Modal -->
     <div id="addModal">
         <div class="brutal-box modal-content">
-            <h2 style="margin-top:0; font-size: 2rem;">➕ 手動新增</h2>
+            <h3 style="margin-top:0; font-size: 1.5rem;">➕ 手動新增單字</h3>
             <input type="text" id="m-word" placeholder="單字 (必填)">
             <input type="text" id="m-category" placeholder="類別 (例: 專案開發)">
             <input type="text" id="m-pos" placeholder="詞性">
             <input type="text" id="m-phonetic" placeholder="IPA 音標">
             <input type="text" id="m-trans" placeholder="中文翻譯 (必填)">
             <div style="display:flex; gap:10px; margin-top:15px;">
-                <button class="brutal-btn" style="background:#FFF; color:var(--dark); flex:1;" onclick="document.getElementById('addModal').style.display='none'">取消</button>
+                <button class="brutal-btn" style="background:var(--paper-bg); color:var(--dark); flex:1;" onclick="document.getElementById('addModal').style.display='none'">取消</button>
                 <button class="brutal-btn" style="flex:1;" onclick="manualAddWord()">確定</button>
             </div>
         </div>
@@ -224,9 +223,9 @@
         async function processTextWithAI() {
             const text = document.getElementById('article').value;
             const btn = document.getElementById('submitBtn');
-            if (!text.trim()) return showMsg("⚠️ 請先貼上英文文章！");
+            if (!text.trim()) return showMsg("⚠️ 請先輸入文章！");
 
-            btn.disabled = true; btn.innerText = "✨ AI 正在生成口訣與例句..."; showMsg("⏳ 呼叫 Gemini 中...");
+            btn.disabled = true; btn.innerText = "✨ AI 解析中..."; showMsg("⏳ 正在生成筆記...");
 
             try {
                 const response = await fetch(GAS_URL, {
@@ -237,18 +236,17 @@
 
                 const result = await response.json();
                 if (result.status === 'success') {
-                    showMsg(`✅ 成功建立 ${result.count} 張 AI 卡片！`);
+                    showMsg(`✅ 成功加入 ${result.count} 個單字！`);
                     document.getElementById('article').value = '';
                     fetchDataFromServer(); 
                 } else { throw new Error(result.message); }
             } catch (err) { showMsg("❌ 解析失敗：" + err.message); }
-            finally { btn.disabled = false; btn.innerText = "🚀 啟動 AI 深度解析"; }
+            finally { btn.disabled = false; btn.innerText = "🚀 開始解析"; }
         }
 
-        // --- 📝 AI 測驗中心 ---
         async function startQuiz() {
-            if(vocabCache.length === 0) return alert("單字盒是空的，請先新增單字！");
-            showMsg("⏳ AI 正在為你出題...");
+            if(vocabCache.length === 0) return alert("筆記本是空的！");
+            showMsg("⏳ AI 正在出題...");
             
             const randomWords = vocabCache.map(w => w.word).sort(() => 0.5 - Math.random()).slice(0, 5);
 
@@ -263,7 +261,7 @@
                     renderQuiz(result.quiz);
                     switchPage('quizPage');
                 } else { throw new Error(); }
-            } catch(e) { showMsg("❌ 出題失敗，請重試"); }
+            } catch(e) { showMsg("❌ 出題失敗"); }
         }
 
         function renderQuiz(quizList) {
@@ -273,21 +271,21 @@
             function showQuestion() {
                 if(currentQ >= quizList.length) {
                     container.innerHTML = `
-                        <div class="brutal-box train-card" style="text-align:center;">
+                        <div class="brutal-box train-card" style="text-align:center; justify-content:center;">
                             <h2>🎉 測驗完成！</h2>
-                            <p style="font-size: 1.5rem;">你太棒了，成功通過 AI 隨堂考！</p>
-                            <button class="brutal-btn" style="background:var(--success); color:#FFF; margin-top:20px;" onclick="switchPage('appPage')">返回單字庫</button>
+                            <p style="font-size: 1.2rem;">你已完成本輪複習。</p>
+                            <button class="brutal-btn" style="background:var(--success); color:#FFF; margin-top:15px;" onclick="switchPage('appPage')">返回手冊</button>
                         </div>`;
                     return;
                 }
                 const q = quizList[currentQ];
                 container.innerHTML = `
-                    <div class="brutal-box train-card">
+                    <div class="brutal-box train-card" style="justify-content: flex-start;">
                         <h3>問題 ${currentQ + 1} / ${quizList.length}</h3>
-                        <p style="font-size: 1.3rem; font-weight:900; margin:15px 0;">${q.question}</p>
-                        <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
+                        <p style="font-size: 1.1rem; font-weight:900; margin:10px 0;">${q.question}</p>
+                        <div style="display:flex; flex-direction:column; gap:8px; width:100%;">
                             ${q.options.map(opt => `
-                                <button class="brutal-btn" style="background:#FFF; color:var(--dark); text-align:left; font-size:1.1rem;" onclick="checkAnswer(this, '${opt}', '${q.answer}')">${opt}</button>
+                                <button class="brutal-btn" style="background:var(--paper-bg); color:var(--dark); text-align:left; font-size:1rem; padding:10px;" onclick="checkAnswer(this, '${opt}', '${q.answer}')">${opt}</button>
                             `).join('')}
                         </div>
                     </div>`;
@@ -298,17 +296,16 @@
                     btn.style.background = 'var(--success)';
                     btn.style.color = '#FFF';
                     showMsg("✅ 答對了！");
-                    setTimeout(() => { currentQ++; showQuestion(); }, 1200);
+                    setTimeout(() => { currentQ++; showQuestion(); }, 1000);
                 } else {
                     btn.style.background = 'var(--primary)';
                     btn.style.color = '#FFF';
-                    showMsg("❌ 答錯囉，正確答案是：" + correct);
+                    showMsg("❌ 正確答案是：" + correct);
                 }
             };
             showQuestion();
         }
 
-        // --- 介面過濾與渲染 ---
         function setCategory(cat) { currentCategory = cat; renderCards(); }
         function setStatusFilter(status) {
             currentStatus = status;
@@ -333,7 +330,7 @@
             
             if (vocabCache.length === 0) {
                 catBar.innerHTML = '';
-                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">空空如也，快請 AI 幫忙吧！</h2>';
+                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">手冊內尚無單字</h2>';
                 return;
             }
 
@@ -344,7 +341,7 @@
 
             const filteredData = getFilteredData();
             if(filteredData.length === 0) {
-                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">這個過濾條件下沒有單字喔！</h2>';
+                container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">此分類無單字</h2>';
                 return;
             }
 
@@ -352,7 +349,6 @@
                 const isLearned = item.status === '已記住';
                 return `
                 <div class="brutal-box vocab-card ${isLearned ? 'learned' : ''}">
-                    <div class="tape"></div>
                     <div class="status-badge ${isLearned ? 'learned' : ''}">${item.status}</div>
                     
                     <div class="flip-container" onclick="this.classList.toggle('is-flipped')">
@@ -362,13 +358,12 @@
                                 <h3 class="word-title">${item.word}</h3>
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="phonetic">${item.phonetic}</div>
-                                <div style="font-size:0.85rem; color:#666; margin-top:8px;">💡 ${item.mnemonic || '無口訣'}</div>
-                                <div class="flip-hint" style="font-size:0.8rem; color:#aaa; margin-top:5px;">👉 點擊翻面</div>
+                                <div style="font-size:0.8rem; color:#555; margin-top:6px;">💡 ${item.mnemonic || ''}</div>
                             </div>
                             <div class="flip-back">
                                 <div class="cat-badge">${item.category}</div>
                                 <div class="translation-huge">${item.translation}</div>
-                                <div class="ai-note"><strong>📖 例句：</strong><br>${item.example || '無'}</div>
+                                <div class="ai-note"><strong>📖 例句：</strong><br>${item.example || ''}</div>
                             </div>
                         </div>
                     </div>
@@ -384,10 +379,9 @@
             `}).join('');
         }
 
-        // --- 🎯 訓練模式 (完美置中) ---
         function startTraining() {
             trainQueue = getFilteredData().filter(w => w.status === '學習中');
-            if(trainQueue.length === 0) return alert("目前的條件下沒有「學習中」的單字需要訓練。");
+            if(trainQueue.length === 0) return alert("目前沒有「學習中」的單字！");
             
             trainQueue = trainQueue.sort(() => Math.random() - 0.5);
             trainIndex = 0;
@@ -405,19 +399,19 @@
                         <div class="flip-inner">
                             <div class="flip-front">
                                 <h3 class="word-title" style="text-align: center;">${item.word}</h3>
-                                <div class="phonetic" style="font-size: 1.5rem;">${item.phonetic}</div>
-                                <div style="font-size:0.9rem; color:#555; margin-top:10px;">💡 ${item.mnemonic || ''}</div>
-                                <div style="font-size:0.8rem; color:#aaa; margin-top:5px;">👉 點擊翻看答案</div>
+                                <div class="phonetic" style="font-size: 1.3rem;">${item.phonetic}</div>
+                                <div style="font-size:0.85rem; color:#555; margin-top:8px;">💡 ${item.mnemonic || ''}</div>
+                                <div style="font-size:0.75rem; color:#aaa; margin-top:4px;">👉 點擊翻面</div>
                             </div>
                             <div class="flip-back">
                                 <span class="pos-badge">${item.pos}</span>
                                 <div class="translation-huge" style="text-align: center;">${item.translation}</div>
-                                <div class="ai-note" style="margin-top:10px;"><strong>📖 例句：</strong><br>${item.example || ''}</div>
+                                <div class="ai-note" style="margin-top:8px;"><strong>📖 例句：</strong><br>${item.example || ''}</div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="card-actions" style="margin-top: 15px;">
+                    <div class="card-actions" style="margin-top: 10px;">
                         <button class="btn-act" style="background:var(--tertiary);" onclick="speakWord(event, '${item.word}')">🔊 唸</button>
                         <button class="btn-act" style="background:#FF595E; color:white;" onclick="trainSetStatus(event, '${item.word}', '學習中')">❌ 沒記住</button>
                         <button class="btn-act" style="background:var(--success); color:white;" onclick="trainSetStatus(event, '${item.word}', '已記住')">✅ 記住了</button>
@@ -443,17 +437,17 @@
 
         function nextCard() {
             if (trainIndex < trainQueue.length - 1) { trainIndex++; renderTrainCard(); } 
-            else { alert("🎉 恭喜！這組訓練完成！"); switchPage('appPage'); }
+            else { alert("🎉 本輪訓練結束！"); switchPage('appPage'); }
         }
 
         function prevCard() {
             if (trainIndex > 0) { trainIndex--; renderTrainCard(); } 
-            else { showMsg("已經是第一張囉！"); }
+            else { showMsg("已是第一張"); }
         }
 
         async function fetchDataFromServer() {
             const container = document.getElementById('vocabContainer');
-            container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">雲端同步中... ☁️</h2>';
+            container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center;">同步中...</h2>';
             try {
                 const res = await fetch(GAS_URL);
                 const result = await res.json();
@@ -461,15 +455,15 @@
                     vocabCache = result.data.reverse();
                     renderCards();
                 }
-            } catch (err) { container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; color:red;">讀取失敗 💀</h2>'; }
+            } catch (err) { container.innerHTML = '<h2 style="grid-column:1/-1; text-align:center; color:red;">讀取失敗</h2>'; }
         }
 
         async function manualAddWord() {
             const rawWord = document.getElementById('m-word').value;
             const trans = document.getElementById('m-trans').value;
-            if(!rawWord || !trans) return alert("單字與翻譯為必填欄位！");
+            if(!rawWord || !trans) return alert("單字與翻譯為必填");
             
-            showMsg("⏳ 寫入中...");
+            showMsg("⏳ 新增中...");
             document.getElementById('addModal').style.display = 'none';
 
             const payload = {
